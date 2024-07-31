@@ -1,0 +1,69 @@
+[gd_scene load_steps=3 format=3 uid="uid://dxmcx4y7mxp3w"]
+
+[ext_resource type="Script" path="res://Scripts/character_selection.gd" id="1_vwqla"]
+[ext_resource type="Resource" uid="uid://8lxc8yusjm3e" path="res://Scripts/data/all_character_classes.tres" id="2_ai8dm"]
+
+[node name="CharacterSelection" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vwqla")
+game_scene = "res://Scenes/GameBoard.tscn"
+main_menu_scene = "res://Scenes/main_menu.tscn"
+classes_resource_group = ExtResource("2_ai8dm")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 25
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Character Select"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ClassList" type="ItemList" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/v_separation = 15
+theme_override_constants/icon_margin = 20
+theme_override_constants/line_separation = 15
+auto_height = true
+same_column_width = true
+icon_scale = 2.0
+fixed_icon_size = Vector2i(32, 32)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Back"
+
+[node name="StartButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+text = "Start"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/StartButton" to="." method="_on_start_pressed"]

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="CharacterClass" load_steps=3 format=3 uid="uid://b5u77jhy1ghhv"]
+
+[ext_resource type="Texture2D" uid="uid://dqevkuvgc8g35" path="res://assets/GUIEssentials/UI_Flat_Slot_02_Selected.png" id="1_kvaio"]
+[ext_resource type="Script" path="res://Scripts/data/character_class.gd" id="1_v051o"]
+
+[resource]
+script = ExtResource("1_v051o")
+character_class = "Warrior"
+icon = ExtResource("1_kvaio")
