@@ -16,28 +16,20 @@ func _load_tile_group():
     tile_resource_group.load_all_into(tiles)
 
 func populate_game_board():
+    var rng: RandomNumberGenerator = RandomNumberGenerator.new()
     var game_board: GridContainer = $MarginContainer/VBoxContainer/GameBoard/GridContainer
 
     for i in range(56):
-        if i % 2 == 0:
-            var tile_data = tiles[0]
-            var tile = TextureButton.new()
-            tile.name = str(i)
-            tile.texture_normal = tile_data.icon
-            tile.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-            tile.size_flags_vertical = Control.SIZE_EXPAND_FILL
-            tile.stretch_mode = TextureButton.STRETCH_SCALE
-            
-            tile.connect("pressed", Callable(self, "_on_Button_pressed").bind(tile)) # Bind to the Callable for custom signal functionality
-
-            game_board.add_child(tile)
-        else:
-            var b = Button.new()
-            b.name = str(i)
-            b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-            b.size_flags_vertical = Control.SIZE_EXPAND_FILL
-            b.connect("pressed", Callable(self, "_on_Button_pressed").bind(b)) # Bind to the Callable for custom signal functionality
-            game_board.add_child(b)
+        var tile_index = rng.randi_range(0, len(tiles) - 1 ) # grab random tile type
+        var tile_data = tiles[tile_index]
+        var tile = TextureButton.new()
+        tile.name = str(i)
+        tile.texture_normal = tile_data.icon
+        tile.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+        tile.size_flags_vertical = Control.SIZE_EXPAND_FILL
+        tile.stretch_mode = TextureButton.STRETCH_SCALE
+        tile.connect("pressed", Callable(self, "_on_Button_pressed").bind(tile)) # Bind to the Callable for custom signal functionality
+        game_board.add_child(tile)
 
 # Function to convert a 1D index to a 2D Vector2 coordinate
 func index_to_vector2(index: int) -> Vector2:

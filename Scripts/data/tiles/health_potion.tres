@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="Tile" load_steps=3 format=3 uid="uid://cswpv3uhsf5y7"]
 
 [ext_resource type="Script" path="res://Scripts/data/tile.gd" id="1_2r8dl"]
-[ext_resource type="Texture2D" uid="uid://d3aedabacjya4" path="res://assets/GUIEssentials/UI_Flat_Slot_01_Selected.png" id="1_bd2yw"]
+[ext_resource type="Texture2D" uid="uid://blhx8se8dwubu" path="res://assets/RPGIconPack/icons/32x32/shard_01d.png" id="1_vqcuq"]
 
 [resource]
 script = ExtResource("1_2r8dl")
-icon = ExtResource("1_bd2yw")
+icon = ExtResource("1_vqcuq")
 positive_effect = true
-effects = 0
+tile_type = 1
 base_effect = 10

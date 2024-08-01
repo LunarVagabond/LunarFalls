@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Tile" load_steps=3 format=3 uid="uid://dwvy0r0n8dwfl"]
+
+[ext_resource type="Script" path="res://Scripts/data/tile.gd" id="1_1esjs"]
+[ext_resource type="Texture2D" uid="uid://fdk2ebg6oh20" path="res://assets/RPGIconPack/icons/32x32/sword_03a.png" id="1_nuox6"]
+
+[resource]
+script = ExtResource("1_1esjs")
+icon = ExtResource("1_nuox6")
+positive_effect = true
+tile_type = 4
+base_effect = 1

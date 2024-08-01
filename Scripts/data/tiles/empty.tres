@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Tile" load_steps=3 format=3 uid="uid://bebpltsnlubml"]
+
+[ext_resource type="Script" path="res://Scripts/data/tile.gd" id="1_il4bw"]
+[ext_resource type="Texture2D" uid="uid://bjl1f2ugm1b1m" path="res://assets/RPGIconPack/icons/32x32/gift_01c.png" id="1_t04nd"]
+
+[resource]
+script = ExtResource("1_il4bw")
+icon = ExtResource("1_t04nd")
+positive_effect = false
+tile_type = 0
+base_effect = 0

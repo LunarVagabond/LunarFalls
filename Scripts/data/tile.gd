@@ -1,7 +1,8 @@
 class_name Tile
 extends Resource
 
-enum Trait {
+enum TileType {
+    Empty,
     Health,
     GoldPts,
     Armor,
@@ -10,5 +11,5 @@ enum Trait {
 
 @export var icon: Texture
 @export var positive_effect: bool
-@export var effects: Trait
+@export var tile_type: TileType
 @export var base_effect: int
