@@ -3,6 +3,7 @@ extends TextureButton
 
 @export var selected_control: ColorRect
 var is_selected: bool = false
+var index_on_board = -1
 
 func _ready():
 	selected_control.hide()  # Hide the panel initially
