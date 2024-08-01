@@ -7,5 +7,5 @@
 script = ExtResource("1_jf6h1")
 icon = ExtResource("1_yaol8")
 positive_effect = false
-tile_type = 1
+tile_type = 5
 base_effect = 10

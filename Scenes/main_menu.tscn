@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://f85jcqju5ima"]
+[gd_scene load_steps=4 format=3 uid="uid://f85jcqju5ima"]
 
 [ext_resource type="Script" path="res://Scripts/main_menu.gd" id="1_sdb3n"]
 [ext_resource type="PackedScene" uid="uid://dxmcx4y7mxp3w" path="res://Scenes/character_selection.tscn" id="2_wgc1f"]
+[ext_resource type="Texture2D" uid="uid://cfdoy0i0iffv8" path="res://assets/MainBG.jpg" id="3_mscx0"]
 
 [node name="MainMenu" type="Control" node_paths=PackedStringArray("new_game_button", "continue_game_button")]
 layout_mode = 3
@@ -14,6 +15,25 @@ script = ExtResource("1_sdb3n")
 character_selection_scene = ExtResource("2_wgc1f")
 new_game_button = NodePath("UIVBoxContainer/NewGame")
 continue_game_button = NodePath("UIVBoxContainer/Continue")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_mscx0")
+
+[node name="TitleLAbel" type="Label" parent="."]
+layout_mode = 2
+offset_left = 178.0
+offset_top = 220.0
+offset_right = 701.0
+offset_bottom = 357.0
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 100
+text = "Lunar Falls"
 
 [node name="UIVBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -29,12 +49,6 @@ offset_bottom = 46.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 25
-
-[node name="TitleLAbel" type="Label" parent="UIVBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 100
-text = "Lunar Falls"
 
 [node name="NewGame" type="Button" parent="UIVBoxContainer"]
 layout_mode = 2

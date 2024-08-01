@@ -34,6 +34,7 @@ func _find_selected_tiles() -> Array[GameTile]:
 func _replace_tiles(selected_tiles: Array[GameTile]):
     for t: GameTile in selected_tiles:
         t.texture_normal = tiles["Empty"].icon
+        t.emit_signal("pressed")
 
 func _load_tile_group():
     var tiles_array: Array[Tile] = []
@@ -76,6 +77,6 @@ func index_to_vector2(index: int) -> Vector2:
     return Vector2(column, row)
 
 func _on_Button_pressed(button: BaseButton): # Normally "pressed" does not take in a button but Bind to callable allows for this (?)
-    print("Tile Clicked: ", button.name)
+    # print("Tile Clicked: ", button.name)
     var x = index_to_vector2(int(str(button.name))) # name is a "StringName" but we need a base string class to cast to int
     print("Coordinate: (%s,%s)" % [x.x, x.y])

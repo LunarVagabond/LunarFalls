@@ -11,12 +11,17 @@
     "res://Scripts/data/classes/": {
       "resource_local_to_scene": true,
       "resource_name": true
+    },
+    "res://Scripts/data/tiles/": {
+      "resource_local_to_scene": true,
+      "resource_name": true
     }
   },
   "recent_paths": [
     "res://Scripts/data/classes/",
     "res://Scripts/data/",
-    "res://Scripts/data//tiles/"
+    "res://Scripts/data//tiles/",
+    "res://Scripts/data/tiles/"
   ],
   "table_functions": {
     "filter": [
