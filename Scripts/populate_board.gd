@@ -10,7 +10,7 @@ extends Control
 var game_board: GridContainer
 var tiles = {}
 
-
+# TODO: Somehow we need to make sure when selecting the tile it is of the same type (sword and enemy can be matched as well)
 # Called when the node enters the scene tree for the first time.
 func _ready():
     game_board = $MarginContainer/VBoxContainer/GameBoard/GridContainer
@@ -35,6 +35,7 @@ func _replace_tiles(selected_tiles: Array[GameTile]):
     for t: GameTile in selected_tiles:
         t.texture_normal = tiles["Empty"].icon
         t.emit_signal("pressed")
+    # TODO: Trigger the next set of enemy actions here
 
 func _load_tile_group():
     var tiles_array: Array[Tile] = []
