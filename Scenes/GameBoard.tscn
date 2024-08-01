@@ -13,8 +13,9 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_mq0vf")
 tile_resource_group = ExtResource("2_kutxu")
-class_image = NodePath("MarginContainer/VBoxContainer/BottomDashboard/VBoxContainer/TextureRect")
 tile_scene = ExtResource("3_3er8d")
+class_image = NodePath("MarginContainer/VBoxContainer/BottomDashboard/VBoxContainer/TextureRect")
+main_menu_scene = "res://Scenes/main_menu.tscn"
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -92,3 +93,9 @@ text = "Figure
 it 
 Out"
 horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/BottomDashboard/VBoxContainer3"]
+layout_mode = 2
+text = "Quit"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/BottomDashboard/VBoxContainer3/Button" to="." method="_on_quit_pressed"]

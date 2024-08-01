@@ -1,11 +1,15 @@
 extends Control
-
+@export_category("Board Settings")
 @export var board_width = 7
 @export var total_tiles = 56
 @export var tile_margin = 2.0 # Margin between tiles
 @export var tile_resource_group: ResourceGroup
-@export var class_image: TextureRect 
 @export var tile_scene: PackedScene
+
+@export_category("Dashboard Settings")
+@export var class_image: TextureRect 
+@export var main_menu_scene: String
+
 
 var game_board: GridContainer
 var tiles = {}
@@ -81,3 +85,6 @@ func _on_Button_pressed(button: BaseButton): # Normally "pressed" does not take 
     # print("Tile Clicked: ", button.name)
     var x = index_to_vector2(int(str(button.name))) # name is a "StringName" but we need a base string class to cast to int
     print("Coordinate: (%s,%s)" % [x.x, x.y])
+
+func _on_quit_pressed():
+    get_tree().change_scene_to_file(main_menu_scene)
