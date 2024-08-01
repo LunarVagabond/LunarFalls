@@ -8,12 +8,31 @@ extends Control
 @export var tile_scene: PackedScene
 
 var tiles: Array[Tile] = []
+var game_board: GridContainer
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+    game_board = $MarginContainer/VBoxContainer/GameBoard/GridContainer
     _load_tile_group()
     _set_dashboard()
     populate_game_board()
+
+func _unhandled_input(event):
+    if event.is_action_pressed(GameConstants.IA_SUBMIT_TURN):
+        var selected_tiles = _find_selected()
+        _replace_tiles(selected_tiles)
+        print("Do this later")
+
+func _find_selected() -> Array[GameTile]:
+    var selected_tiles: Array[GameTile] = []
+    for txtbtn: GameTile in game_board.get_children():
+        if txtbtn.is_selected:
+            selected_tiles.append(txtbtn)
+    return selected_tiles
+
+func _replace_tiles(tiles: Array[GameTile]):
+    pass
 
 func _load_tile_group():
     tile_resource_group.load_all_into(tiles)
@@ -25,7 +44,6 @@ func _set_dashboard():
 
 func populate_game_board():
     var rng: RandomNumberGenerator = RandomNumberGenerator.new()
-    var game_board: GridContainer = $MarginContainer/VBoxContainer/GameBoard/GridContainer
 
     for i in range(56):
         var tile_index = rng.randi_range(0, len(tiles) - 1 ) # grab random tile type

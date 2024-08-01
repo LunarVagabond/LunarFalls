@@ -1,7 +1,8 @@
+class_name GameTile
 extends TextureButton
 
 @export var selected_control: ColorRect
-var selection_control: bool = false
+var is_selected: bool = false
 
 func _ready():
 	selected_control.hide()  # Hide the panel initially
@@ -9,9 +10,9 @@ func _ready():
 
 
 func _on_pressed_select():
-	if selection_control: 
-		selection_control = false
+	if is_selected: 
+		is_selected = false
 		selected_control.hide()
 	else:
-		selection_control = true
+		is_selected = true
 		selected_control.show()
