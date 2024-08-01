@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://b21wu3bwm806o"]
+
+[ext_resource type="Script" path="res://Scripts/GameTile.gd" id="1_3t3pg"]
+
+[node name="Tile" type="TextureButton" node_paths=PackedStringArray("selected_control")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3t3pg")
+selected_control = NodePath("ColorRect")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.431373, 0.431373, 0.431373, 0.756863)
+
+[connection signal="pressed" from="." to="." method="_on_pressed_select"]

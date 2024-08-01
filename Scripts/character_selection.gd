@@ -5,6 +5,8 @@ extends Control
 @export var classes_resource_group: ResourceGroup
 
 var CharacterSelection: ItemList
+var class_list: Array[CharacterClass] = []
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -13,9 +15,7 @@ func _ready():
 	CharacterSelection.select(0)
 
 func _load_character_classes():
-	var class_list: Array[CharacterClass] = []
 	classes_resource_group.load_all_into(class_list)
-
 	for cls in class_list:
 		CharacterSelection.add_item(cls.character_class, cls.icon)
 
@@ -24,4 +24,16 @@ func _on_back_button_pressed():
 	get_tree().change_scene_to_file(main_menu_scene)
 
 func _on_start_pressed():
-	get_tree().change_scene_to_file(game_scene)	
+	# Get the selected class index
+	var selected_index = CharacterSelection.get_selected_items()[0]
+	
+	# Get the selected class
+	var selected_class_data: CharacterClass = class_list[selected_index]
+	
+	# # Store the selected class and its data in the global singleton
+	Globals.class_data = selected_class_data
+	
+	print("Class Data: ", selected_class_data)
+	
+	# Change the scene to the game scene
+	get_tree().change_scene_to_file(game_scene)

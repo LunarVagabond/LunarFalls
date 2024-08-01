@@ -4,16 +4,24 @@ extends Control
 @export var total_tiles = 56
 @export var tile_margin = 2.0 # Margin between tiles
 @export var tile_resource_group: ResourceGroup
+@export var class_image: TextureRect 
+@export var tile_scene: PackedScene
 
 var tiles: Array[Tile] = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
     _load_tile_group()
+    _set_dashboard()
     populate_game_board()
 
 func _load_tile_group():
     tile_resource_group.load_all_into(tiles)
+
+func _set_dashboard():
+    var image_data = Globals.class_data.icon.get_image()
+    var image_texture = ImageTexture.create_from_image(image_data)
+    class_image.texture = image_texture
 
 func populate_game_board():
     var rng: RandomNumberGenerator = RandomNumberGenerator.new()
@@ -22,7 +30,10 @@ func populate_game_board():
     for i in range(56):
         var tile_index = rng.randi_range(0, len(tiles) - 1 ) # grab random tile type
         var tile_data = tiles[tile_index]
-        var tile = TextureButton.new()
+        while tile_data.tile_type == Tile.TileType.Empty:
+            tile_index = rng.randi_range(0, len(tiles) - 1 ) # grab random tile type
+            tile_data = tiles[tile_index]
+        var tile = tile_scene.instantiate()
         tile.name = str(i)
         tile.texture_normal = tile_data.icon
         tile.size_flags_horizontal = Control.SIZE_EXPAND_FILL

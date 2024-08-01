@@ -30,7 +30,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 25
 
-[node name="Label" type="Label" parent="UIVBoxContainer"]
+[node name="TitleLAbel" type="Label" parent="UIVBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 100
