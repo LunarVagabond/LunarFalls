@@ -18,4 +18,4 @@ func _on_start_new_game_pressed():
 
 
 func _on_continue_game_pressed():
-	print("Finish this later but we should load stuff here")
+	Globals.load_game()

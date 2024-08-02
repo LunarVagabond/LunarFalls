@@ -1,4 +1,5 @@
 dist/*
+game_data/
 
 # Godot-specific ignores
 .import/

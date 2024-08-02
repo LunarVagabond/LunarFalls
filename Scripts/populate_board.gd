@@ -7,7 +7,7 @@ extends Control
 @export var tile_scene: PackedScene
 
 @export_category("Dashboard Settings")
-@export var class_image: TextureRect 
+@export var class_image: TextureRect
 @export var main_menu_scene: String
 
 
@@ -22,11 +22,18 @@ func _ready():
     _set_dashboard()
     populate_game_board()
 
+# Handle user clicking done
 func _unhandled_input(event):
-    if event.is_action_pressed(GameConstants.IA_SUBMIT_TURN):
+    if Globals.is_palyers_turn and event.is_action_pressed(GameConstants.IA_SUBMIT_TURN):
+        Globals.is_palyers_turn = false
         var selected_tiles = _find_selected_tiles()
         _replace_tiles(selected_tiles)
+        _handle_enemy_turn()
+        Globals.is_palyers_turn = true
         print("Do this later")
+
+func _handle_enemy_turn():
+    pass
 
 func _find_selected_tiles() -> Array[GameTile]:
     var selected_tiles: Array[GameTile] = []
@@ -37,10 +44,12 @@ func _find_selected_tiles() -> Array[GameTile]:
 
 func _replace_tiles(selected_tiles: Array[GameTile]):
     for t: GameTile in selected_tiles:
-        t.texture_normal = tiles["Empty"].icon
-        t.emit_signal("pressed")
-    # TODO: Trigger the next set of enemy actions here
-
+        var new_tile = _new_tile(t.index_on_board)
+        game_board.remove_child(t)
+        game_board.add_child(new_tile)
+        game_board.move_child(new_tile, new_tile.index_on_board)
+        t.queue_free()
+    
 func _load_tile_group():
     var tiles_array: Array[Tile] = []
     tile_resource_group.load_all_into(tiles_array)
@@ -54,17 +63,18 @@ func _set_dashboard():
 
 func populate_game_board():
     for i in range(56):
-        var tile_data: Tile = get_random_dict_key()
-        var tile = tile_scene.instantiate()
-
-        tile.name = str(i)
-        tile.index_on_board = i
-        tile.texture_normal = tile_data.icon
-        tile.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-        tile.size_flags_vertical = Control.SIZE_EXPAND_FILL
-        tile.stretch_mode = TextureButton.STRETCH_SCALE
-        tile.connect("pressed", Callable(self, "_on_Button_pressed").bind(tile)) # Bind to the Callable for custom signal functionality
+        var tile = _new_tile(i)
         game_board.add_child(tile)
+
+func _new_tile(idx: int) -> GameTile:
+    var tile_data: Tile = get_random_dict_key()
+    var tile: GameTile = tile_scene.instantiate()
+    tile.tile_type = tile_data.tile_type
+    tile.name = str(idx)
+    tile.index_on_board = idx
+    tile.texture_normal = tile_data.icon
+    tile.connect("pressed", Callable(self, "_on_Button_pressed").bind(tile)) # Bind to the Callable for custom signal functionality
+    return tile
 
 func get_random_dict_key() -> Tile:
     var keys = tiles.keys()
@@ -87,4 +97,6 @@ func _on_Button_pressed(button: BaseButton): # Normally "pressed" does not take 
     print("Coordinate: (%s,%s)" % [x.x, x.y])
 
 func _on_quit_pressed():
+    Globals.game_state["game_board"] = game_board.get_children()
+    Globals.save_game()
     get_tree().change_scene_to_file(main_menu_scene)

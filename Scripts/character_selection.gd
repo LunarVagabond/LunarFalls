@@ -32,6 +32,7 @@ func _on_start_pressed():
 	
 	# # Store the selected class and its data in the global singleton
 	Globals.class_data = selected_class_data
+	Globals.game_state["class_data"] = selected_class_data
 	
 	print("Class Data: ", selected_class_data)
 	
