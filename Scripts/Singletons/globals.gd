@@ -2,6 +2,7 @@ extends Node
 
 var class_data: CharacterClass
 var is_palyers_turn: bool = true
+var current_round = 0
 
 # Default state, updated in save game and set when loading
 var game_state = {

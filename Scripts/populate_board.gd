@@ -40,7 +40,10 @@ func _handle_enemy_turn():
     for t: GameTile in game_board.get_children():
         if t.tile_type == Tile.TileType.Enemy:
             dmg += 1
-    print("Damage Done: ", dmg)
+    # FIXME: update to handle damage to armor / health algorithim 
+    SignalManager.emit_signal("update_health", -dmg)
+    SignalManager.emit_signal("update_armor", -dmg)
+    print("Damage Done: ", -dmg)
 
 func _find_selected_tiles() -> Array[GameTile]:
     var selected_tiles: Array[GameTile] = []

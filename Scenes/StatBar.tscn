@@ -1,0 +1,35 @@
+[gd_scene load_steps=2 format=3 uid="uid://eober06mhhdr"]
+
+[ext_resource type="Script" path="res://Scripts/Helpers/StatBar.gd" id="1_jbu83"]
+
+[node name="ProgressBar" type="ProgressBar" node_paths=PackedStringArray("label_text_node", "label_value_node")]
+custom_minimum_size = Vector2(25, 25)
+offset_right = 720.0
+offset_bottom = 27.0
+size_flags_horizontal = 3
+step = 1.0
+value = 50.0
+show_percentage = false
+script = ExtResource("1_jbu83")
+label_text_node = NodePath("HBoxContainer/TextLabel")
+label_value_node = NodePath("HBoxContainer/ValueLabel")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 2
+
+[node name="TextLabel" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "Place Golder"
+horizontal_alignment = 1
+
+[node name="ValueLabel" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0 / 0"
+horizontal_alignment = 1
