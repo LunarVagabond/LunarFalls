@@ -13,7 +13,6 @@ func _customize_resource(resource: Resource, path: String) -> Resource:
 	print("Customizing resource: ", path)
 	# re-scan resource paths for ResourceGroup on export
 	if resource is ResourceGroup:
-		print("Updating resource group before export: ", path)
 		var group:ResourceGroup = resource as ResourceGroup
 		var resource_scanner = ResourceScanner.new(group)
 		var resource_paths   = resource_scanner.scan()

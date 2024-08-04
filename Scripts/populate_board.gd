@@ -10,6 +10,9 @@ extends Control
 @export var class_image: TextureRect
 @export var main_menu_scene: String
 
+@export_category("Required Nodes")
+@export var game_over_node: Control
+
 
 var game_board: GridContainer
 var tiles = {}
@@ -17,7 +20,9 @@ var tiles = {}
 # TODO: Somehow we need to make sure when selecting the tile it is of the same type (sword and enemy can be matched as well)
 # Called when the node enters the scene tree for the first time.
 func _ready():
+    game_over_node.hide()
     game_board = $MarginContainer/VBoxContainer/GameBoard/GridContainer
+    SignalManager.connect("game_over", _handle_game_over)
     _load_tile_group()
     _set_dashboard()
     populate_game_board()
@@ -98,18 +103,17 @@ func _new_tile(idx: int, can_be_empty: bool) -> GameTile:
     tile.name = str(idx)
     tile.index_on_board = idx
     tile.texture_normal = tile_data.icon
-    tile.connect("pressed", Callable(self, "_on_Button_pressed").bind(tile)) # Bind to the Callable for custom signal functionality
+    tile.connect("pressed", Callable(self, "_on_button_pressed").bind(tile)) # Bind to the Callable for custom signal functionality
     return tile
 
 func _new_specific_tile(idx: int, target_type: Tile.TileType) -> GameTile:
     var tile_data: Tile = tiles[Tile.TileType.keys()[target_type]]
-    print(tile_data)
     var tile: GameTile = tile_scene.instantiate()
     tile.tile_type = tile_data.tile_type
     tile.name = str(idx)
     tile.index_on_board = idx
     tile.texture_normal = tile_data.icon
-    tile.connect("pressed", Callable(self, "_on_Button_pressed").bind(tile)) # Bind to the Callable for custom signal functionality
+    tile.connect("pressed", Callable(self, "_on_button_pressed").bind(tile)) # Bind to the Callable for custom signal functionality
     return tile
 
 func get_random_dict_key(empty_allowed: bool) -> Tile:
@@ -129,7 +133,7 @@ func index_to_vector2(index: int) -> Vector2:
 
 # ------- Signals ----- #
 
-func _on_Button_pressed(button: BaseButton): # Normally "pressed" does not take in a button but Bind to callable allows for this (?)
+func _on_button_pressed(button: BaseButton): # Normally "pressed" does not take in a button but Bind to callable allows for this (?)
     # print("Tile Clicked: ", button.name)
     var x = index_to_vector2(int(str(button.name))) # name is a "StringName" but we need a base string class to cast to int
     print("Coordinate: (%s,%s)" % [x.x, x.y])
@@ -138,3 +142,7 @@ func _on_quit_pressed():
     Globals.game_state["game_board"] = game_board.get_children()
     Globals.save_game()
     get_tree().change_scene_to_file(main_menu_scene)
+
+func _handle_game_over():
+    print("Game Over")
+    game_over_node.show()

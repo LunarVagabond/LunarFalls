@@ -30,6 +30,8 @@ func _ready():
 
 func _update_current(change_amnt: int):
     current_stat_count += change_amnt
+    if container_type == ContainerType.Health && current_stat_count <= 0:
+        SignalManager.emit_signal("game_over")
     value = current_stat_count
     label_value_node.text = "%s / %s" % [value, label_max]
 
