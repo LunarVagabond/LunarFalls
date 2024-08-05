@@ -1,3 +1,4 @@
+class_name StatBar
 extends ProgressBar
 
 @export_category("Default Settings")
@@ -17,7 +18,6 @@ enum ContainerType
     Health,
     Armor
 }
-
 
 func _ready():
     min_value = label_min
@@ -40,3 +40,8 @@ func _connect_proper_signal():
         SignalManager.connect("update_health", Callable(self, "_update_current"))
     elif container_type == ContainerType.Armor:
         SignalManager.connect("update_armor", Callable(self, "_update_current"))
+
+func initilize_instance(m: int):
+    max_value = m
+    value = m
+    label_value_node.text = " %s / %s" % [m, m]

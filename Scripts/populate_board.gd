@@ -9,6 +9,9 @@ extends Control
 @export_category("Dashboard Settings")
 @export var class_image: TextureRect
 @export var main_menu_scene: String
+@export var str_label: Label
+@export var health_bar: StatBar
+@export var ap_bar: StatBar
 
 @export_category("Required Nodes")
 @export var game_over_node: Control
@@ -35,7 +38,7 @@ func _ready():
 
 # Handle user clicking done
 func _unhandled_input(event):
-	if Globals.is_palyers_turn and event.is_action_pressed(GameConstants.IA_SUBMIT_TURN):
+	if Globals.is_palyers_turn and len(Globals.current_selection) > 0 and event.is_action_pressed(GameConstants.IA_SUBMIT_TURN):
 		Globals.is_palyers_turn = false
 		# var selected_tiles = _find_selected_tiles()
 		_replace_tiles_with_empty(Globals.current_selection)
@@ -98,6 +101,9 @@ func _load_tile_group():
 func _set_dashboard():
 	var image_data = Globals.class_data.icon.get_image()
 	var image_texture = ImageTexture.create_from_image(image_data)
+	str_label.text = "STR: %s" % Globals.class_data.starting_str
+	health_bar.initilize_instance(Globals.class_data.starting_hp)
+	ap_bar.initilize_instance(Globals.class_data.starting_ap)
 	class_image.texture = image_texture
 
 func populate_game_board():

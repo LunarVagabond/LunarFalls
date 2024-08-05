@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://dxmcx4y7mxp3w"]
+[gd_scene load_steps=6 format=3 uid="uid://dxmcx4y7mxp3w"]
 
 [ext_resource type="Script" path="res://Scripts/character_selection.gd" id="1_vwqla"]
 [ext_resource type="Resource" uid="uid://8lxc8yusjm3e" path="res://Scripts/data/all_character_classes.tres" id="2_ai8dm"]
 [ext_resource type="FontFile" uid="uid://dpwpa8ww5g66r" path="res://assets/Fonts/Clarity.ttf" id="3_bnxwp"]
 [ext_resource type="Texture2D" uid="uid://dn00qi1yujs82" path="res://assets/RPGIconPack/icons/32x32/hat_01a.png" id="4_7pbbv"]
+[ext_resource type="Theme" uid="uid://6ejucie1j8lf" path="res://assets/DefaultButtonTheme.tres" id="5_k2ki2"]
 
 [node name="CharacterSelection" type="Control" node_paths=PackedStringArray("class_icon", "class_description")]
 layout_mode = 3
@@ -98,6 +99,7 @@ theme_override_constants/separation = 15
 [node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("5_k2ki2")
 theme_override_fonts/font = ExtResource("3_bnxwp")
 theme_override_font_sizes/font_size = 30
 text = "Back"
@@ -107,6 +109,7 @@ custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
+theme = ExtResource("5_k2ki2")
 theme_override_fonts/font = ExtResource("3_bnxwp")
 theme_override_font_sizes/font_size = 30
 text = "Start"
