@@ -1,12 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://bph06jpcxmkmm"]
+[gd_scene load_steps=7 format=3 uid="uid://bph06jpcxmkmm"]
 
 [ext_resource type="Script" path="res://Scripts/populate_board.gd" id="1_mq0vf"]
 [ext_resource type="Resource" uid="uid://dkhxc4kq1t5m1" path="res://Scripts/data/all_tiles.tres" id="2_kutxu"]
 [ext_resource type="PackedScene" uid="uid://b21wu3bwm806o" path="res://Scenes/Tile.tscn" id="3_3er8d"]
+[ext_resource type="Texture2D" uid="uid://c7ivs18amv8y" path="res://assets/GameOver.png" id="4_o5quv"]
 [ext_resource type="PackedScene" uid="uid://eober06mhhdr" path="res://Scenes/StatBar.tscn" id="4_qr7ni"]
 [ext_resource type="PackedScene" uid="uid://bdyi0o78evs6d" path="res://Scenes/GameOver.tscn" id="5_b87jj"]
 
-[node name="GameBoard" type="Control" node_paths=PackedStringArray("class_image", "game_over_node")]
+[node name="GameBoard" type="Control" node_paths=PackedStringArray("class_image", "game_over_node", "game_board")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,9 +17,19 @@ grow_vertical = 2
 script = ExtResource("1_mq0vf")
 tile_resource_group = ExtResource("2_kutxu")
 tile_scene = ExtResource("3_3er8d")
-class_image = NodePath("MarginContainer/VBoxContainer/BottomDashboard/VBoxContainer/TextureRect")
+class_image = NodePath("MarginContainer/ViewContainer/BottomDashboard/VBoxContainer/TextureRect")
 main_menu_scene = "res://Scenes/main_menu.tscn"
 game_over_node = NodePath("GameOver")
+game_board = NodePath("MarginContainer/ViewContainer/GameBoard/TileContainer")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.136377, 0.141697, 0.231468, 1)
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -32,21 +43,30 @@ theme_override_constants/margin_top = 15
 theme_override_constants/margin_right = 15
 theme_override_constants/margin_bottom = 25
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="ViewContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 15
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="TitleLabel" type="Label" parent="MarginContainer/ViewContainer"]
 layout_mode = 2
 text = "Good Luck Adventurer"
 horizontal_alignment = 1
 
-[node name="GameBoard" type="Panel" parent="MarginContainer/VBoxContainer"]
+[node name="GameBoard" type="Panel" parent="MarginContainer/ViewContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 3.0
 
-[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/GameBoard"]
+[node name="GameBG" type="TextureRect" parent="MarginContainer/ViewContainer/GameBoard"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_o5quv")
+
+[node name="TileContainer" type="GridContainer" parent="MarginContainer/ViewContainer/GameBoard"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -58,59 +78,59 @@ theme_override_constants/v_separation = 10
 columns = 7
 metadata/_edit_use_anchors_ = true
 
-[node name="BottomDashboard" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="BottomDashboard" type="HBoxContainer" parent="MarginContainer/ViewContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 15
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/BottomDashboard"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/ViewContainer/BottomDashboard"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Temp" type="Label" parent="MarginContainer/VBoxContainer/BottomDashboard/VBoxContainer"]
+[node name="Temp" type="Label" parent="MarginContainer/ViewContainer/BottomDashboard/VBoxContainer"]
 layout_mode = 2
 text = "Character Info"
 horizontal_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/BottomDashboard/VBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/ViewContainer/BottomDashboard/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/BottomDashboard"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/ViewContainer/BottomDashboard"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Temp" type="Label" parent="MarginContainer/VBoxContainer/BottomDashboard/VBoxContainer2"]
+[node name="Temp" type="Label" parent="MarginContainer/ViewContainer/BottomDashboard/VBoxContainer2"]
 layout_mode = 2
 text = "Stats
 "
 horizontal_alignment = 1
 
-[node name="HPContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/BottomDashboard/VBoxContainer2"]
+[node name="HPContainer" type="HBoxContainer" parent="MarginContainer/ViewContainer/BottomDashboard/VBoxContainer2"]
 layout_mode = 2
 
-[node name="ProgressBar" parent="MarginContainer/VBoxContainer/BottomDashboard/VBoxContainer2/HPContainer" instance=ExtResource("4_qr7ni")]
+[node name="ProgressBar" parent="MarginContainer/ViewContainer/BottomDashboard/VBoxContainer2/HPContainer" instance=ExtResource("4_qr7ni")]
 layout_mode = 2
 label_text = "HP"
 
-[node name="APContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/BottomDashboard/VBoxContainer2"]
+[node name="APContainer" type="HBoxContainer" parent="MarginContainer/ViewContainer/BottomDashboard/VBoxContainer2"]
 layout_mode = 2
 
-[node name="ProgressBar" parent="MarginContainer/VBoxContainer/BottomDashboard/VBoxContainer2/APContainer" instance=ExtResource("4_qr7ni")]
+[node name="ProgressBar" parent="MarginContainer/ViewContainer/BottomDashboard/VBoxContainer2/APContainer" instance=ExtResource("4_qr7ni")]
 layout_mode = 2
 label_text = "AP"
 container_type = 1
 
-[node name="VBoxContainer3" type="VBoxContainer" parent="MarginContainer/VBoxContainer/BottomDashboard"]
+[node name="VBoxContainer3" type="VBoxContainer" parent="MarginContainer/ViewContainer/BottomDashboard"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Temp" type="Label" parent="MarginContainer/VBoxContainer/BottomDashboard/VBoxContainer3"]
+[node name="Temp" type="Label" parent="MarginContainer/ViewContainer/BottomDashboard/VBoxContainer3"]
 layout_mode = 2
 text = "Buttons"
 horizontal_alignment = 1
 
-[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/BottomDashboard/VBoxContainer3"]
+[node name="Button" type="Button" parent="MarginContainer/ViewContainer/BottomDashboard/VBoxContainer3"]
 layout_mode = 2
 text = "Save & Quit"
 
@@ -118,4 +138,4 @@ text = "Save & Quit"
 visible = false
 layout_mode = 1
 
-[connection signal="pressed" from="MarginContainer/VBoxContainer/BottomDashboard/VBoxContainer3/Button" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="MarginContainer/ViewContainer/BottomDashboard/VBoxContainer3/Button" to="." method="_on_quit_pressed"]
