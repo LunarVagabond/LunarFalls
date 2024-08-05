@@ -1,5 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://bdyi0o78evs6d"]
+[gd_scene load_steps=3 format=3 uid="uid://bdyi0o78evs6d"]
 
+[ext_resource type="Script" path="res://Scripts/GameOver.gd" id="1_32fad"]
 [ext_resource type="Texture2D" uid="uid://c7ivs18amv8y" path="res://assets/GameOver.png" id="1_lmo05"]
 
 [node name="GameOver" type="Control"]
@@ -9,6 +10,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_32fad")
+character_selection_scene = "res://Scenes/character_selection.tscn"
+main_menu_scene = "res://Scenes/main_menu.tscn"
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 1
@@ -61,3 +65,6 @@ text = "New Game"
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
 text = "Main Menu"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/NewGame" to="." method="_on_new_game"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MainMenu" to="." method="_on_menu_pressed"]

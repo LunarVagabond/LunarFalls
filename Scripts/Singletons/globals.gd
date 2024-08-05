@@ -3,6 +3,7 @@ extends Node
 var class_data: CharacterClass
 var is_palyers_turn: bool = true
 var current_round = 1
+var current_selection: Array[GameTile] = []
 
 # Default state, updated in save game and set when loading
 var game_state = {
@@ -19,6 +20,9 @@ func _ready():
     print("Globals Loaded")
     pass # Replace with function body.
 
+func _handle_selection(tile: GameTile):
+    print("Selected: %s" % tile)
+    # current_selection.append(tile)
 
 func save_game():
     var save_dir = "./game_data/"

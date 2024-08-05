@@ -13,18 +13,30 @@ func _ready():
 	size_flags_vertical = Control.SIZE_EXPAND_FILL
 	stretch_mode = TextureButton.STRETCH_SCALE
 
-func change_selected():
-	# FIXME: this should probably be removed as it is test code
-	# eventually the tile should be deleted and a new one isntered
-	is_selected = false
-	selected_control.hide()
-
-
 func _on_pressed_select():
 	if Globals.is_palyers_turn:
+		# Was Selected so player is deselecting
 		if is_selected: 
 			is_selected = false
 			selected_control.hide()
+			var tile_idx = Globals.current_selection.find(self)
+			Globals.current_selection.remove_at(tile_idx)
 		else:
-			is_selected = true
-			selected_control.show()
+			## Add logic to only add if tile is of same type AND within a 3x3 grid of tile at center
+			if _allowed_to_add():
+				selected_control.show()
+				is_selected = true
+				Globals.current_selection.append(self)
+
+func _allowed_to_add() -> bool:
+	if len(Globals.current_selection) > 0:
+		var tile: GameTile = Globals.current_selection[0]
+		if tile_type == tile.tile_type:
+			return true
+		# We allow strength and enemy combination
+		elif (tile_type == Tile.TileType.Enemy and tile.tile_type == Tile.TileType.Strength) or (tile_type == Tile.TileType.Strength and tile.tile_type == Tile.TileType.Enemy):
+			return true
+		else: 
+			return false
+	# The array is empty so it's okay to add
+	return true

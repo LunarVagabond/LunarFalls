@@ -37,14 +37,15 @@ func _ready():
 func _unhandled_input(event):
 	if Globals.is_palyers_turn and event.is_action_pressed(GameConstants.IA_SUBMIT_TURN):
 		Globals.is_palyers_turn = false
-		var selected_tiles = _find_selected_tiles()
-		_replace_tiles_with_empty(selected_tiles)
+		# var selected_tiles = _find_selected_tiles()
+		_replace_tiles_with_empty(Globals.current_selection)
 		_handle_enemy_turn()
-		var empty_tiles = _find_empty_tiles()
+		var empty_tiles = _find_empty_tiles() # TODO: we can probably simply grab the name of selected tiles and track that rather then looping again
 		if len(empty_tiles) > 0:
 			_replace_tiles(empty_tiles, false)
 		Globals.current_round +=1 
 		Globals.is_palyers_turn = true
+		Globals.current_selection.clear() # Reset the array
 		game_title_label.text = "Round %s" % Globals.current_round
 		print("Do this later")
 
@@ -161,15 +162,4 @@ func _handle_game_over():
 	game_over_node.show()
 
 func _handle_mobile_submit():
-	if Globals.is_palyers_turn:
-		Globals.is_palyers_turn = false
-		var selected_tiles = _find_selected_tiles()
-		_replace_tiles_with_empty(selected_tiles)
-		_handle_enemy_turn()
-		var empty_tiles = _find_empty_tiles()
-		if len(empty_tiles) > 0:
-			_replace_tiles(empty_tiles, false)
-		Globals.current_round +=1 
-		Globals.is_palyers_turn = true
-		game_title_label.text = "Round %s" % Globals.current_round
-		print("Do this later")
+	_unhandled_input(GameConstants.IA_SUBMIT_TURN)
