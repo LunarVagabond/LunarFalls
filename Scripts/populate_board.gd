@@ -15,11 +15,17 @@ extends Control
 @export var game_board: GridContainer
 @export var game_title_label: Label
 
+@export_category("Mobile Nodes")
+@export var mobile_submit_button: Button
+
 var tiles = {}
 
 # TODO: Somehow we need to make sure when selecting the tile it is of the same type (sword and enemy can be matched as well)
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	var os = OS.get_name() # "Android", "BlackBerry 10", "Flash", "Haiku", "iOS", "HTML5", "OSX", "Server", "Windows", "WinRT", "X11"
+	if os in ["iOS", "Android", "BlackBerry 10"]:
+		mobile_submit_button.show()
 	game_over_node.hide()
 	SignalManager.connect("game_over", _handle_game_over)
 	_clear_board()
@@ -153,3 +159,17 @@ func _on_quit_pressed():
 func _handle_game_over():
 	print("Game Over")
 	game_over_node.show()
+
+func _handle_mobile_submit():
+	if Globals.is_palyers_turn:
+		Globals.is_palyers_turn = false
+		var selected_tiles = _find_selected_tiles()
+		_replace_tiles_with_empty(selected_tiles)
+		_handle_enemy_turn()
+		var empty_tiles = _find_empty_tiles()
+		if len(empty_tiles) > 0:
+			_replace_tiles(empty_tiles, false)
+		Globals.current_round +=1 
+		Globals.is_palyers_turn = true
+		game_title_label.text = "Round %s" % Globals.current_round
+		print("Do this later")

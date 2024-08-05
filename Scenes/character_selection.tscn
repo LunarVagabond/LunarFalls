@@ -85,6 +85,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ClassDescript" type="Label" parent="MarginContainer/VBoxContainer/ClassDisplay/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(1, 2)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_bnxwp")
 text = "Base Stats:"

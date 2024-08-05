@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bdyi0o78evs6d" path="res://Scenes/GameOver.tscn" id="5_b87jj"]
 [ext_resource type="Texture2D" uid="uid://cl2orrg6bncrn" path="res://assets/GUIEssentials/UI_Flat_Select_02a2.png" id="5_s32u3"]
 
-[node name="GameBoard" type="Control" node_paths=PackedStringArray("class_image", "game_over_node", "game_board", "game_title_label")]
+[node name="GameBoard" type="Control" node_paths=PackedStringArray("class_image", "game_over_node", "game_board", "game_title_label", "mobile_submit_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -24,6 +24,7 @@ main_menu_scene = "res://Scenes/main_menu.tscn"
 game_over_node = NodePath("GameOver")
 game_board = NodePath("MarginContainer/ViewContainer/GameBoard/TileContainer")
 game_title_label = NodePath("MarginContainer/ViewContainer/TitleLabel")
+mobile_submit_button = NodePath("MarginContainer/ViewContainer/BottomDashboard/VBoxContainer3/MobileSubmit")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -131,11 +132,18 @@ container_type = 1
 [node name="VBoxContainer3" type="VBoxContainer" parent="MarginContainer/ViewContainer/BottomDashboard"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_constants/separation = 15
 
 [node name="Temp" type="Label" parent="MarginContainer/ViewContainer/BottomDashboard/VBoxContainer3"]
 layout_mode = 2
 text = "Buttons"
 horizontal_alignment = 1
+
+[node name="MobileSubmit" type="Button" parent="MarginContainer/ViewContainer/BottomDashboard/VBoxContainer3"]
+visible = false
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_sqvpv")
+text = "Submit Move"
 
 [node name="Button" type="Button" parent="MarginContainer/ViewContainer/BottomDashboard/VBoxContainer3"]
 layout_mode = 2
@@ -146,4 +154,5 @@ text = "Save & Quit"
 visible = false
 layout_mode = 1
 
+[connection signal="pressed" from="MarginContainer/ViewContainer/BottomDashboard/VBoxContainer3/MobileSubmit" to="." method="_handle_mobile_submit"]
 [connection signal="pressed" from="MarginContainer/ViewContainer/BottomDashboard/VBoxContainer3/Button" to="." method="_on_quit_pressed"]
