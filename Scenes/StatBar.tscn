@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://eober06mhhdr"]
+[gd_scene load_steps=3 format=3 uid="uid://eober06mhhdr"]
 
 [ext_resource type="Script" path="res://Scripts/Helpers/StatBar.gd" id="1_jbu83"]
+[ext_resource type="FontFile" uid="uid://dpwpa8ww5g66r" path="res://assets/Fonts/Clarity.ttf" id="2_4jnx4"]
 
 [node name="ProgressBar" type="ProgressBar" node_paths=PackedStringArray("label_text_node", "label_value_node")]
 custom_minimum_size = Vector2(25, 25)
@@ -25,11 +26,13 @@ theme_override_constants/separation = 2
 
 [node name="TextLabel" type="Label" parent="HBoxContainer"]
 layout_mode = 2
-text = "Place Golder"
+theme_override_fonts/font = ExtResource("2_4jnx4")
+text = "ST"
 horizontal_alignment = 1
 
 [node name="ValueLabel" type="Label" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_4jnx4")
 text = "0 / 0"
 horizontal_alignment = 1

@@ -1,13 +1,15 @@
-[gd_scene load_steps=7 format=3 uid="uid://bph06jpcxmkmm"]
+[gd_scene load_steps=9 format=3 uid="uid://bph06jpcxmkmm"]
 
 [ext_resource type="Script" path="res://Scripts/populate_board.gd" id="1_mq0vf"]
 [ext_resource type="Resource" uid="uid://dkhxc4kq1t5m1" path="res://Scripts/data/all_tiles.tres" id="2_kutxu"]
 [ext_resource type="PackedScene" uid="uid://b21wu3bwm806o" path="res://Scenes/Tile.tscn" id="3_3er8d"]
 [ext_resource type="Texture2D" uid="uid://c7ivs18amv8y" path="res://assets/GameOver.png" id="4_o5quv"]
 [ext_resource type="PackedScene" uid="uid://eober06mhhdr" path="res://Scenes/StatBar.tscn" id="4_qr7ni"]
+[ext_resource type="FontFile" uid="uid://dpwpa8ww5g66r" path="res://assets/Fonts/Clarity.ttf" id="4_sqvpv"]
 [ext_resource type="PackedScene" uid="uid://bdyi0o78evs6d" path="res://Scenes/GameOver.tscn" id="5_b87jj"]
+[ext_resource type="Texture2D" uid="uid://cl2orrg6bncrn" path="res://assets/GUIEssentials/UI_Flat_Select_02a2.png" id="5_s32u3"]
 
-[node name="GameBoard" type="Control" node_paths=PackedStringArray("class_image", "game_over_node", "game_board")]
+[node name="GameBoard" type="Control" node_paths=PackedStringArray("class_image", "game_over_node", "game_board", "game_title_label")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,6 +23,7 @@ class_image = NodePath("MarginContainer/ViewContainer/BottomDashboard/VBoxContai
 main_menu_scene = "res://Scenes/main_menu.tscn"
 game_over_node = NodePath("GameOver")
 game_board = NodePath("MarginContainer/ViewContainer/GameBoard/TileContainer")
+game_title_label = NodePath("MarginContainer/ViewContainer/TitleLabel")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -49,6 +52,8 @@ theme_override_constants/separation = 15
 
 [node name="TitleLabel" type="Label" parent="MarginContainer/ViewContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("4_sqvpv")
+theme_override_font_sizes/font_size = 30
 text = "Good Luck Adventurer"
 horizontal_alignment = 1
 
@@ -93,8 +98,10 @@ text = "Character Info"
 horizontal_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/ViewContainer/BottomDashboard/VBoxContainer"]
+texture_filter = 1
 layout_mode = 2
 size_flags_vertical = 3
+texture = ExtResource("5_s32u3")
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/ViewContainer/BottomDashboard"]
 layout_mode = 2
@@ -132,6 +139,7 @@ horizontal_alignment = 1
 
 [node name="Button" type="Button" parent="MarginContainer/ViewContainer/BottomDashboard/VBoxContainer3"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("4_sqvpv")
 text = "Save & Quit"
 
 [node name="GameOver" parent="." instance=ExtResource("5_b87jj")]

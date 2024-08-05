@@ -7,3 +7,7 @@
 script = ExtResource("1_b0fto")
 character_class = "Rouge"
 icon = ExtResource("1_evn3s")
+description = "A Shady Fellow"
+starting_hp = 75
+starting_ap = 50
+starting_str = 3

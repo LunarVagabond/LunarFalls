@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://dxmcx4y7mxp3w"]
+[gd_scene load_steps=5 format=3 uid="uid://dxmcx4y7mxp3w"]
 
 [ext_resource type="Script" path="res://Scripts/character_selection.gd" id="1_vwqla"]
 [ext_resource type="Resource" uid="uid://8lxc8yusjm3e" path="res://Scripts/data/all_character_classes.tres" id="2_ai8dm"]
+[ext_resource type="FontFile" uid="uid://dpwpa8ww5g66r" path="res://assets/Fonts/Clarity.ttf" id="3_bnxwp"]
+[ext_resource type="Texture2D" uid="uid://dn00qi1yujs82" path="res://assets/RPGIconPack/icons/32x32/hat_01a.png" id="4_7pbbv"]
 
-[node name="CharacterSelection" type="Control"]
+[node name="CharacterSelection" type="Control" node_paths=PackedStringArray("class_icon", "class_description")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,6 +16,8 @@ script = ExtResource("1_vwqla")
 game_scene = "res://Scenes/GameBoard.tscn"
 main_menu_scene = "res://Scenes/main_menu.tscn"
 classes_resource_group = ExtResource("2_ai8dm")
+class_icon = NodePath("MarginContainer/VBoxContainer/ClassDisplay/ClassIcon")
+class_description = NodePath("MarginContainer/VBoxContainer/ClassDisplay/Panel/VBoxContainer/ClassDescript")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -33,6 +37,8 @@ theme_override_constants/separation = 10
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_bnxwp")
+theme_override_font_sizes/font_size = 50
 text = "Character Select"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -41,13 +47,48 @@ vertical_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
 theme_override_constants/v_separation = 15
 theme_override_constants/icon_margin = 20
 theme_override_constants/line_separation = 15
+theme_override_fonts/font = ExtResource("3_bnxwp")
+theme_override_font_sizes/font_size = 30
 auto_height = true
 same_column_width = true
 icon_scale = 2.0
 fixed_icon_size = Vector2i(32, 32)
+
+[node name="ClassDisplay" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ClassIcon" type="TextureRect" parent="MarginContainer/VBoxContainer/ClassDisplay"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("4_7pbbv")
+
+[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer/ClassDisplay"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ClassDisplay/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 5.0
+offset_right = -8.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ClassDescript" type="Label" parent="MarginContainer/VBoxContainer/ClassDisplay/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_bnxwp")
+text = "Base Stats:"
+autowrap_mode = 3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -56,6 +97,8 @@ theme_override_constants/separation = 15
 [node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("3_bnxwp")
+theme_override_font_sizes/font_size = 30
 text = "Back"
 
 [node name="StartButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
@@ -63,7 +106,10 @@ custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
+theme_override_fonts/font = ExtResource("3_bnxwp")
+theme_override_font_sizes/font_size = 30
 text = "Start"
 
+[connection signal="item_clicked" from="MarginContainer/VBoxContainer/ClassList" to="." method="_on_class_list_item_clicked"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/StartButton" to="." method="_on_start_pressed"]

@@ -13,6 +13,7 @@ extends Control
 @export_category("Required Nodes")
 @export var game_over_node: Control
 @export var game_board: GridContainer
+@export var game_title_label: Label
 
 var tiles = {}
 
@@ -21,6 +22,7 @@ var tiles = {}
 func _ready():
 	game_over_node.hide()
 	SignalManager.connect("game_over", _handle_game_over)
+	_clear_board()
 	_load_tile_group()
 	_set_dashboard()
 	populate_game_board()
@@ -35,7 +37,9 @@ func _unhandled_input(event):
 		var empty_tiles = _find_empty_tiles()
 		if len(empty_tiles) > 0:
 			_replace_tiles(empty_tiles, false)
+		Globals.current_round +=1 
 		Globals.is_palyers_turn = true
+		game_title_label.text = "Round %s" % Globals.current_round
 		print("Do this later")
 
 func _handle_enemy_turn():
@@ -128,6 +132,11 @@ func index_to_vector2(index: int) -> Vector2:
 	var row = index / board_width
 	var column = index % board_width
 	return Vector2(column, row)
+
+func _clear_board():
+	for child: Node in game_board.get_children():
+		game_board.remove_child(child)
+		child.queue_free()
 
 # ------- Signals ----- #
 

@@ -7,3 +7,7 @@
 script = ExtResource("1_v051o")
 character_class = "Warrior"
 icon = ExtResource("1_kvaio")
+description = "A salwart defender"
+starting_hp = 100
+starting_ap = 100
+starting_str = 1
