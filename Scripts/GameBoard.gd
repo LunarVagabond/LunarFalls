@@ -31,7 +31,7 @@ func _ready():
 	SignalManager.connect("game_over", _handle_game_over)
 	_clear_board()
 	_set_dashboard()
-	populate_game_board()
+	_populate_game_board()
 
 # Handle user clicking done
 func _unhandled_input(event):
@@ -55,16 +55,8 @@ func _handle_enemy_turn():
 		if t.tile_type == Tile.TileType.Enemy:
 			dmg += 1
 	# FIXME: update to handle damage to armor / health algorithim 
-	SignalManager.emit_signal("update_health", -dmg)
-	SignalManager.emit_signal("update_armor", -dmg)
+	Player.take_damage(dmg)
 	print("Damage Done: ", -dmg)
-
-func _find_selected_tiles() -> Array[GameTile]:
-	var selected_tiles: Array[GameTile] = []
-	for txtbtn: GameTile in game_board.get_children():
-		if txtbtn.is_selected:
-			selected_tiles.append(txtbtn)
-	return selected_tiles
 
 func _find_empty_tiles() -> Array[GameTile]:
 	var empty: Array[GameTile] = []
@@ -75,7 +67,7 @@ func _find_empty_tiles() -> Array[GameTile]:
 
 func _replace_tiles(selected_tiles: Array[GameTile], allow_empty: bool):
 	for t: GameTile in selected_tiles:
-		var new_tile: GameTile = tile_scene.instantiate().create(t.index_on_board, board_width, allow_empty)
+		var new_tile: GameTile = tile_scene.instantiate().create(t.index_on_board, board_width, allow_empty, -1, t.coordinate)
 		game_board.remove_child(t)
 		game_board.add_child(new_tile)
 		game_board.move_child(new_tile, new_tile.index_on_board)
@@ -101,7 +93,7 @@ func _handle_player_selection() -> void:
 
 func _replace_tiles_with_empty(selected_tiles: Array[GameTile]):
 	for tile: GameTile in selected_tiles:
-		var new_tile = tile_scene.instantiate().create(tile.index_on_board, true, Tile.TileType.Empty)
+		var new_tile = tile_scene.instantiate().create(tile.index_on_board, true, Tile.TileType.Empty, -1, tile.coordinate)
 		game_board.remove_child(tile)
 		tile.queue_free()
 		game_board.add_child(new_tile)
@@ -116,20 +108,10 @@ func _set_dashboard():
 	ap_bar.initilize_instance(Player.class_data.starting_ap)
 	class_image.texture = image_texture
 
-func populate_game_board():
+func _populate_game_board():
 	for i in range(56):
 		var tile: GameTile = tile_scene.instantiate().create(i, board_width, false)
 		game_board.add_child(tile)
-
-
-func get_random_dict_key(empty_allowed: bool) -> Tile:
-	var keys = Globals.tiles.keys()
-	var random_index = randi() % keys.size()
-	var tile: Tile = Globals.tiles[keys[random_index]]
-	while not empty_allowed and tile.tile_type == Tile.TileType.Empty:
-		random_index = randi() % keys.size()
-		tile = Globals.tiles[keys[random_index]]
-	return tile
 
 func _clear_board():
 	for child: Node in game_board.get_children():

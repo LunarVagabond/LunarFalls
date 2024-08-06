@@ -32,8 +32,6 @@ func _update_current(change_amnt: int):
     label_value_node.text = "%s / %s" % [value, max_value]
 
     match container_type:
-        ContainerType.Health when value <= 0:
-            SignalManager.emit_signal("game_over")
         ContainerType.Health:
             Player.current_hp = value
         ContainerType.Armor:

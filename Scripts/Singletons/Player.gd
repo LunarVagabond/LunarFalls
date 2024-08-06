@@ -8,4 +8,9 @@ var current_ap: int
 var current_str: int
 var current_gold: int
 
-# TODO: add a take damage and deal damage func
+func take_damage(amnt: int):
+    current_hp -= amnt
+    if current_hp <= 0:
+        SignalManager.emit_signal("game_over")
+    SignalManager.emit_signal("update_health", -amnt)
+    SignalManager.emit_signal("update_armor", -amnt)
