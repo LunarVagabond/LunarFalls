@@ -11,3 +11,4 @@ description = "A Shady Fellow"
 starting_hp = 75
 starting_ap = 50
 starting_str = 3
+starting_gold = 50

@@ -10,6 +10,7 @@ extends Control
 @export var class_image: TextureRect
 @export var main_menu_scene: String
 @export var str_label: Label
+@export var gold_label: Label
 @export var health_bar: StatBar
 @export var ap_bar: StatBar
 
@@ -40,7 +41,7 @@ func _ready():
 func _unhandled_input(event):
 	if Globals.is_palyers_turn and len(Globals.current_selection) > 0 and event.is_action_pressed(GameConstants.IA_SUBMIT_TURN):
 		Globals.is_palyers_turn = false
-		# var selected_tiles = _find_selected_tiles()
+		_handle_player_selection()
 		_replace_tiles_with_empty(Globals.current_selection)
 		_handle_enemy_turn()
 		var empty_tiles = _find_empty_tiles() # TODO: we can probably simply grab the name of selected tiles and track that rather then looping again
@@ -84,6 +85,24 @@ func _replace_tiles(selected_tiles: Array[GameTile], allow_empty: bool):
 		game_board.move_child(new_tile, new_tile.index_on_board)
 		t.queue_free()
 
+func _handle_player_selection() -> void:
+	var tile_type: Tile.TileType = Globals.current_selection[0].tile_type
+	print(tile_type)
+	# TODO: Figure out the scaling and what not
+	match tile_type:
+		Tile.TileType.Health:
+			SignalManager.emit_signal("update_health", len(Globals.current_selection))
+		Tile.TileType.Armor:
+			SignalManager.emit_signal("update_armor", len(Globals.current_selection))
+		Tile.TileType.Enemy or Tile.TileType.Strength:
+			print("Enemy Selected not doing a damnd thing baby!")
+		Tile.TileType.GoldPts:
+			Globals.current_gold += len(Globals.current_selection)
+			gold_label.text = "Gold: %s" % Globals.current_gold
+		_: 
+			print("You should not be here!")
+	
+
 func _replace_tiles_with_empty(selected_tiles: Array[GameTile]):
 	for t: GameTile in selected_tiles:
 		var new_tile = _new_specific_tile(t.index_on_board, Tile.TileType.Empty)
@@ -102,6 +121,7 @@ func _set_dashboard():
 	var image_data = Globals.class_data.icon.get_image()
 	var image_texture = ImageTexture.create_from_image(image_data)
 	str_label.text = "STR: %s" % Globals.class_data.starting_str
+	gold_label.text = "GOLD: %s" % Globals.class_data.starting_gold 
 	health_bar.initilize_instance(Globals.class_data.starting_hp)
 	ap_bar.initilize_instance(Globals.class_data.starting_ap)
 	class_image.texture = image_texture

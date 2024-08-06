@@ -11,3 +11,4 @@ description = "A salwart defender"
 starting_hp = 100
 starting_ap = 100
 starting_str = 1
+starting_gold = 15

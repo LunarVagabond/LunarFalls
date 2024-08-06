@@ -11,8 +11,6 @@ extends ProgressBar
 @export var label_value_node: Label
 @export var container_type: ContainerType
 
-var current_stat_count = 0
-
 enum ContainerType 
 {
     Health,
@@ -22,18 +20,26 @@ enum ContainerType
 func _ready():
     min_value = label_min
     max_value = label_max
-    current_stat_count = label_max
     value = label_max
     label_text_node.text = label_text
     label_value_node.text = "%s / %s" % [label_max, label_max]
     _connect_proper_signal()
 
 func _update_current(change_amnt: int):
-    current_stat_count += change_amnt
-    if container_type == ContainerType.Health && current_stat_count <= 0:
-        SignalManager.emit_signal("game_over")
-    value = current_stat_count
-    label_value_node.text = "%s / %s" % [value, label_max]
+    value += change_amnt
+    if value > max_value:
+        value = max_value
+    label_value_node.text = "%s / %s" % [value, max_value]
+
+    match container_type:
+        ContainerType.Health when value <= 0:
+            SignalManager.emit_signal("game_over")
+        ContainerType.Health:
+            Globals.current_hp = value
+        ContainerType.Armor:
+            Globals.current_ap = value
+        _:
+            print("Handle other updates here like armor later")
 
 func _connect_proper_signal():
     if container_type == ContainerType.Health:

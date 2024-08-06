@@ -44,6 +44,10 @@ func _on_start_pressed():
 	# # Store the selected class and its data in the global singleton
 	Globals.class_data = selected_class_data
 	Globals.game_state["class_data"] = selected_class_data
+	Globals.current_hp = selected_class_data.starting_hp
+	Globals.current_ap = selected_class_data.starting_ap
+	Globals.current_str = selected_class_data.starting_str
+	Globals.current_gold = selected_class_data.starting_gold
 	
 	print("Class Data: ", selected_class_data)
 	

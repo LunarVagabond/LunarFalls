@@ -1,9 +1,16 @@
 extends Node
 
-var class_data: CharacterClass
+# ---- Game State ---- #
 var is_palyers_turn: bool = true
 var current_round = 1
 var current_selection: Array[GameTile] = []
+
+# ---- Player Data ---- #
+var class_data: CharacterClass
+var current_hp: int
+var current_ap: int
+var current_str: int
+var current_gold: int
 
 # Default state, updated in save game and set when loading
 var game_state = {

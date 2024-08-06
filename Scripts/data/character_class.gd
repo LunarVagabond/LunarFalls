@@ -7,3 +7,4 @@ extends Resource
 @export var starting_hp: int
 @export var starting_ap: int
 @export var starting_str: int
+@export var starting_gold: int
