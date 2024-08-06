@@ -1,7 +1,6 @@
-[gd_scene load_steps=13 format=3 uid="uid://bph06jpcxmkmm"]
+[gd_scene load_steps=12 format=3 uid="uid://bph06jpcxmkmm"]
 
-[ext_resource type="Script" path="res://Scripts/populate_board.gd" id="1_mq0vf"]
-[ext_resource type="Resource" uid="uid://dkhxc4kq1t5m1" path="res://Scripts/data/all_tiles.tres" id="2_kutxu"]
+[ext_resource type="Script" path="res://Scripts/GameBoard.gd" id="1_rf1fe"]
 [ext_resource type="PackedScene" uid="uid://b21wu3bwm806o" path="res://Scenes/Tile.tscn" id="3_3er8d"]
 [ext_resource type="Texture2D" uid="uid://c7ivs18amv8y" path="res://assets/GameOver.png" id="4_o5quv"]
 [ext_resource type="PackedScene" uid="uid://eober06mhhdr" path="res://Scenes/StatBar.tscn" id="4_qr7ni"]
@@ -26,9 +25,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_mq0vf")
-tile_resource_group = ExtResource("2_kutxu")
-tile_scene = ExtResource("3_3er8d")
+script = ExtResource("1_rf1fe")
 class_image = NodePath("MarginContainer/ViewContainer/BottomDashboard/VBoxContainer/TextureRect")
 main_menu_scene = "res://Scenes/main_menu.tscn"
 str_label = NodePath("MarginContainer/ViewContainer/BottomDashboard/VBoxContainer2/STRLabel")
@@ -38,6 +35,7 @@ ap_bar = NodePath("MarginContainer/ViewContainer/BottomDashboard/VBoxContainer2/
 game_over_node = NodePath("GameOver")
 game_board = NodePath("MarginContainer/ViewContainer/GameBoard/TileContainer")
 game_title_label = NodePath("MarginContainer/ViewContainer/TitleLabel")
+tile_scene = ExtResource("3_3er8d")
 mobile_submit_button = NodePath("MarginContainer/ViewContainer/BottomDashboard/VBoxContainer3/MobileSubmit")
 
 [node name="ColorRect" type="ColorRect" parent="."]

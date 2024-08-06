@@ -12,6 +12,7 @@ offset_bottom = -1216.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_3t3pg")
+tile_scene = null
 selected_control = NodePath("ColorRect")
 hp_label = NodePath("HBoxContainer/HP")
 atk_label = NodePath("HBoxContainer/ATK")

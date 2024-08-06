@@ -1,3 +1,4 @@
+# Singleton set in Autoload
 extends Node
 
 # ---- Game State ---- #
@@ -5,12 +6,8 @@ var is_palyers_turn: bool = true
 var current_round = 1
 var current_selection: Array[GameTile] = []
 
-# ---- Player Data ---- #
-var class_data: CharacterClass
-var current_hp: int
-var current_ap: int
-var current_str: int
-var current_gold: int
+var tile_resource_group: ResourceGroup = preload("res://Scripts/data/all_tiles.tres")
+var tiles = {}
 
 # Default state, updated in save game and set when loading
 var game_state = {
@@ -24,8 +21,14 @@ var game_state = {
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+    _load_tile_group()
     print("Globals Loaded")
-    pass # Replace with function body.
+
+func _load_tile_group():
+    var tiles_array: Array[Tile] = []
+    tile_resource_group.load_all_into(tiles_array)
+    for t: Tile in tiles_array:
+        tiles[Tile.TileType.keys()[t.tile_type]] = t
 
 func _handle_selection(tile: GameTile):
     print("Selected: %s" % tile)
@@ -36,7 +39,7 @@ func save_game():
     DirAccess.make_dir_recursive_absolute(save_dir)
     # Prepare game state for saving
     var serializable_state = {
-        "chosen_class": class_data.character_class,
+        # "chosen_class": class_data.character_class,
         "current_health": game_state["current_health"],
         "current_armor": game_state["current_armor"],
         "current_gold": game_state["current_gold"],

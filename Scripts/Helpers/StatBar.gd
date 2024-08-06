@@ -35,9 +35,9 @@ func _update_current(change_amnt: int):
         ContainerType.Health when value <= 0:
             SignalManager.emit_signal("game_over")
         ContainerType.Health:
-            Globals.current_hp = value
+            Player.current_hp = value
         ContainerType.Armor:
-            Globals.current_ap = value
+            Player.current_ap = value
         _:
             print("Handle other updates here like armor later")
 
