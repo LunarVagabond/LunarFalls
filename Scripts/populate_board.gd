@@ -39,7 +39,7 @@ func _ready():
 
 # Handle user clicking done
 func _unhandled_input(event):
-	if Globals.is_palyers_turn and len(Globals.current_selection) > 0 and event.is_action_pressed(GameConstants.IA_SUBMIT_TURN):
+	if Globals.is_palyers_turn and len(Globals.current_selection) >= 3 and event.is_action_pressed(GameConstants.IA_SUBMIT_TURN):
 		Globals.is_palyers_turn = false
 		_handle_player_selection()
 		_replace_tiles_with_empty(Globals.current_selection)
@@ -104,12 +104,12 @@ func _handle_player_selection() -> void:
 	
 
 func _replace_tiles_with_empty(selected_tiles: Array[GameTile]):
-	for t: GameTile in selected_tiles:
-		var new_tile = _new_specific_tile(t.index_on_board, Tile.TileType.Empty)
-		game_board.remove_child(t)
+	for tile: GameTile in selected_tiles:
+		var new_tile = _new_specific_tile(tile.index_on_board, Tile.TileType.Empty)
+		game_board.remove_child(tile)
+		tile.queue_free()
 		game_board.add_child(new_tile)
 		game_board.move_child(new_tile, new_tile.index_on_board)
-		t.queue_free()
 
 func _load_tile_group():
 	var tiles_array: Array[Tile] = []
@@ -120,7 +120,7 @@ func _load_tile_group():
 func _set_dashboard():
 	var image_data = Globals.class_data.icon.get_image()
 	var image_texture = ImageTexture.create_from_image(image_data)
-	str_label.text = "STR: %s" % Globals.class_data.starting_str
+	str_label.text = "Base ATK: %s" % Globals.class_data.starting_str
 	gold_label.text = "GOLD: %s" % Globals.class_data.starting_gold 
 	health_bar.initilize_instance(Globals.class_data.starting_hp)
 	ap_bar.initilize_instance(Globals.class_data.starting_ap)
@@ -136,6 +136,7 @@ func _new_tile(idx: int, can_be_empty: bool) -> GameTile:
 	var tile: GameTile = tile_scene.instantiate()
 	tile.tile_type = tile_data.tile_type
 	tile.name = str(idx)
+	tile.coordinate = index_to_vector2(idx)
 	tile.index_on_board = idx
 	tile.texture_normal = tile_data.icon
 	tile.connect("pressed", Callable(self, "_on_button_pressed").bind(tile)) # Bind to the Callable for custom signal functionality
@@ -146,6 +147,7 @@ func _new_specific_tile(idx: int, target_type: Tile.TileType) -> GameTile:
 	var tile: GameTile = tile_scene.instantiate()
 	tile.tile_type = tile_data.tile_type
 	tile.name = str(idx)
+	tile.coordinate = index_to_vector2(idx)
 	tile.index_on_board = idx
 	tile.texture_normal = tile_data.icon
 	tile.connect("pressed", Callable(self, "_on_button_pressed").bind(tile)) # Bind to the Callable for custom signal functionality

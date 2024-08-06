@@ -155,7 +155,7 @@ text = "Gold: 0"
 [node name="STRLabel" type="Label" parent="MarginContainer/ViewContainer/BottomDashboard/VBoxContainer2"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_sqvpv")
-text = "Atk: 0"
+text = "Base ATK: 0"
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="MarginContainer/ViewContainer/BottomDashboard"]
 layout_mode = 2
