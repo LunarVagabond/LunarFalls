@@ -5,7 +5,7 @@ game_data/
 .import/
 export/
 *.import
-*.godot
+.godot/*
 *.mono/
 
 # macOS-specific ignores
