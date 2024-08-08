@@ -37,7 +37,7 @@ game_over_node = NodePath("GameOver")
 game_board = NodePath("MarginContainer/ViewContainer/GameBoard/TileContainer")
 game_title_label = NodePath("MarginContainer/ViewContainer/TitleLabel")
 tile_scene = ExtResource("3_3er8d")
-mobile_submit_button = NodePath("MarginContainer/ViewContainer/BottomDashboard/VBoxContainer3/MobileSubmit")
+mobile_submit_button = NodePath("")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -166,12 +166,6 @@ layout_mode = 2
 text = "Buttons"
 horizontal_alignment = 1
 
-[node name="MobileSubmit" type="Button" parent="MarginContainer/ViewContainer/BottomDashboard/VBoxContainer3"]
-visible = false
-layout_mode = 2
-theme_override_fonts/font = ExtResource("4_sqvpv")
-text = "Submit Move"
-
 [node name="Button" type="Button" parent="MarginContainer/ViewContainer/BottomDashboard/VBoxContainer3"]
 layout_mode = 2
 theme = ExtResource("8_kun4r")
@@ -187,5 +181,4 @@ stream = ExtResource("9_7x5q6")
 volume_db = -10.0
 autoplay = true
 
-[connection signal="pressed" from="MarginContainer/ViewContainer/BottomDashboard/VBoxContainer3/MobileSubmit" to="." method="_handle_mobile_submit"]
 [connection signal="pressed" from="MarginContainer/ViewContainer/BottomDashboard/VBoxContainer3/Button" to="." method="_on_quit_pressed"]

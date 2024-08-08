@@ -21,6 +21,8 @@ extends Control
 @export_category("Mobile Nodes")
 @export var mobile_submit_button: Button
 
+var is_dragging: bool = false
+var start_tile = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -33,10 +35,58 @@ func _ready():
     _set_dashboard()
     _populate_game_board()
 
-# Handle user clicking done
-func _unhandled_input(event):
-    if Globals.is_palyers_turn and len(Globals.current_selection) >= 3 and event.is_action_pressed(GameConstants.IA_SUBMIT_TURN):
-        Globals.is_palyers_turn = false
+func _input(event):
+    if event.is_action_pressed("mouse_click"):
+        # Detect the start of the drag
+        start_tile = _get_tile_at_position(event.position)
+        if start_tile:
+            start_tile.toggle_selected()
+            is_dragging = true
+            Globals.current_selection.clear()
+            Globals.current_selection.append(start_tile)
+            print("Drag started at:", event.position)
+
+    elif event.is_action_released("mouse_click"):
+        # Detect the end of the drag
+        if is_dragging:
+            is_dragging = false
+            _handle_drag_end()
+            for n: Node in game_board.get_children():
+                var tile = n as GameTile
+                tile.toggle_off_selection()
+            Globals.current_selection.clear()
+            print("Drag ended at:", event.position)
+    
+    elif is_dragging and (event is InputEventMouseMotion or event is InputEventScreenTouch):
+        # Handle dragging
+        var tile = _get_tile_at_position(event.position)
+        if tile:
+            if tile in Globals.current_selection:
+                # Check if the tile being hovered is the one before the last tile in the chain
+                var array_len = Globals.current_selection.size()
+                if array_len > 1 and tile == Globals.current_selection[array_len - 2]:
+                    # Remove the last tile from the chain
+                    var last_tile = Globals.current_selection.pop_back()
+                    last_tile.toggle_selected()
+                    print("Removed tile:", last_tile.name, "at:", event.position)
+            elif tile not in Globals.current_selection and tile._allowed_to_add():
+                Globals.current_selection.append(tile)
+                tile.toggle_selected()
+                print("Dragging over tile:", tile.name, "at:", event.position)
+
+
+
+func _get_tile_at_position(pos: Vector2) -> GameTile:
+    # Placeholder function to find a tile at a position
+    for tile in game_board.get_children():
+        if tile is GameTile and tile.get_global_rect().has_point(pos):
+            return tile
+    return null
+
+func _handle_drag_end():
+    # Valid move made progress the game
+    if len(Globals.current_selection) >= 3:
+        print("Valid selection with", len(Globals.current_selection), "tiles")
         _handle_player_selection()
         _replace_tiles_with_empty(Globals.current_selection)
         _handle_enemy_turn()
@@ -47,7 +97,12 @@ func _unhandled_input(event):
         Globals.is_palyers_turn = true
         Globals.current_selection.clear() # Reset the array
         game_title_label.text = "Round %s" % Globals.current_round
-        print("Do this later")
+    # Invalid move player go again
+    else:
+        print("Invalid selection with", len(Globals.current_selection), "tiles")
+    
+# Handle user clicking done
+
 
 func _handle_enemy_turn():
     var dmg = 0
@@ -59,7 +114,6 @@ func _handle_enemy_turn():
         # print("Damage Count: %s" % dmg)
     # FIXME: update to handle damage to armor / health algorithim 
     Player.take_damage(dmg)
-    print("Damage Taken: ", -dmg)
 
 func _find_empty_tiles() -> Array[GameTile]:
     var empty: Array[GameTile] = []
@@ -100,7 +154,6 @@ func _replace_tiles_with_empty(selected_tiles: Array[GameTile]):
         if tile.tile_type == Tile.TileType.Enemy:
             should_replace = tile.take_damage(player_damage)
         if should_replace:
-            print("here")
             var new_tile = tile_scene.instantiate().create(tile.index_on_board, board_width, true, Tile.TileType.Empty, tile.coordinate)
             game_board.remove_child(tile)
             tile.queue_free()
@@ -137,5 +190,3 @@ func _handle_game_over():
     print("Game Over")
     game_over_node.show()
 
-func _handle_mobile_submit():
-    _unhandled_input(GameConstants.IA_SUBMIT_TURN)

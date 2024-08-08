@@ -65,6 +65,10 @@ func toggle_selected():
         selected_control.show()
         is_selected = true
 
+func toggle_off_selection():
+    selected_control.hide()
+    is_selected = false
+
 # Function to convert a 1D index to a 2D Vector2 coordinate
 func index_to_vector2(index: int, board_width: int) -> Vector2:
     var row = floor(index / board_width)
@@ -72,20 +76,21 @@ func index_to_vector2(index: int, board_width: int) -> Vector2:
     return Vector2(column, row)
 
 func _on_pressed_select():
-    if Globals.is_palyers_turn:
-        # Was Selected so player is deselecting
-        if (is_selected) and (_allowed_to_deselect()): 
-            is_selected = false
-            selected_control.hide()
-            var tile_idx = Globals.current_selection.find(self)
-            Globals.current_selection.remove_at(tile_idx)
-        else:
-            # Add logic to only add if tile is of same type AND within a 3x3 grid of tile at center
-            if self not in Globals.current_selection and _allowed_to_add():
-                # print("Selected Tile Coordinate: %s" % coordinate)
-                selected_control.show()
-                is_selected = true
-                Globals.current_selection.append(self)
+    pass
+    # if Globals.is_palyers_turn:
+    #     # Was Selected so player is deselecting
+    #     if (is_selected) and (_allowed_to_deselect()): 
+    #         is_selected = false
+    #         selected_control.hide()
+    #         var tile_idx = Globals.current_selection.find(self)
+    #         Globals.current_selection.remove_at(tile_idx)
+    #     else:
+    #         # Add logic to only add if tile is of same type AND within a 3x3 grid of tile at center
+    #         if self not in Globals.current_selection and _allowed_to_add():
+    #             # print("Selected Tile Coordinate: %s" % coordinate)
+    #             selected_control.show()
+    #             is_selected = true
+    #             Globals.current_selection.append(self)
 
 func _allowed_to_add() -> bool:
     var allowed = false
