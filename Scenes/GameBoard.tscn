@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bph06jpcxmkmm"]
+[gd_scene load_steps=13 format=3 uid="uid://bph06jpcxmkmm"]
 
 [ext_resource type="Script" path="res://Scripts/GameBoard.gd" id="1_rf1fe"]
 [ext_resource type="PackedScene" uid="uid://b21wu3bwm806o" path="res://Scenes/Tile.tscn" id="3_3er8d"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bdyi0o78evs6d" path="res://Scenes/GameOver.tscn" id="5_b87jj"]
 [ext_resource type="Texture2D" uid="uid://cl2orrg6bncrn" path="res://assets/GUIEssentials/UI_Flat_Select_02a2.png" id="5_s32u3"]
 [ext_resource type="Theme" uid="uid://6ejucie1j8lf" path="res://assets/DefaultButtonTheme.tres" id="8_kun4r"]
+[ext_resource type="AudioStream" uid="uid://dk1ikswpiany8" path="res://assets/Audio/SpaceBG.mp3" id="9_7x5q6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vvey6"]
 bg_color = Color(0.65098, 0, 0.211765, 1)
@@ -180,6 +181,11 @@ text = "Save & Quit"
 [node name="GameOver" parent="." instance=ExtResource("5_b87jj")]
 visible = false
 layout_mode = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_7x5q6")
+volume_db = -10.0
+autoplay = true
 
 [connection signal="pressed" from="MarginContainer/ViewContainer/BottomDashboard/VBoxContainer3/MobileSubmit" to="." method="_handle_mobile_submit"]
 [connection signal="pressed" from="MarginContainer/ViewContainer/BottomDashboard/VBoxContainer3/Button" to="." method="_on_quit_pressed"]

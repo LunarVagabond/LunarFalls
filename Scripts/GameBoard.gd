@@ -42,7 +42,6 @@ func _unhandled_input(event):
         _handle_enemy_turn()
         var empty_tiles = _find_empty_tiles() # TODO: we can probably simply grab the name of selected tiles and track that rather then looping again
         if len(empty_tiles) > 0:
-            print("Tiles to empty out nbaby%s" % len(empty_tiles))
             _replace_tiles(empty_tiles, false)
         Globals.current_round +=1 
         Globals.is_palyers_turn = true
