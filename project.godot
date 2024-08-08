@@ -21,6 +21,7 @@ resources_spreadsheet_view/context_menu_on_leftclick=false
 [application]
 
 config/name="Lunar Falls"
+config/tags=PackedStringArray("mobile", "solo")
 run/main_scene="res://Scenes/main_menu.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://icon.svg"

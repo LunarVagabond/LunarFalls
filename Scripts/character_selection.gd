@@ -31,7 +31,6 @@ func _load_character_classes():
 		CharacterSelection.add_item(cls.character_class, cls.icon)
 
 func _on_back_button_pressed():
-	print("Path %s", main_menu_scene)
 	get_tree().change_scene_to_file(main_menu_scene)
 
 func _on_start_pressed():

@@ -12,8 +12,8 @@ var tile_type: Tile.TileType
 var coordinate = Vector2.ZERO
 
 # --- Enemy Specifics --- #
-var atk_power: int = 1
-var hp: int = 1
+var atk_power: int = randi_range(1,3)
+var hp: int = randi_range(1,3)
 
 func _ready():
     selected_control.hide()  # Hide the panel initially
@@ -46,6 +46,20 @@ func create(idx:int, board_width: int, empty_allowed: bool, enforce_tile: int = 
     texture_normal = tile_data.icon
     return self
 
+# How much damage to take if new hp less then 0 remove will be true
+func take_damage(amnt: int) -> bool:
+    var remove: bool = false
+    var new_hp: int =  hp - amnt
+    hp_label.text = str(new_hp)
+    is_selected = false
+    selected_control.hide()
+    if (new_hp <= 0):
+        remove = true
+    return remove
+
+func remove_tile():
+    pass
+
 
 # Function to convert a 1D index to a 2D Vector2 coordinate
 func index_to_vector2(index: int, board_width: int) -> Vector2:
@@ -64,7 +78,7 @@ func _on_pressed_select():
         else:
             # Add logic to only add if tile is of same type AND within a 3x3 grid of tile at center
             if self not in Globals.current_selection and _allowed_to_add():
-                print("Selected Tile Coordinate: %s" % coordinate)
+                # print("Selected Tile Coordinate: %s" % coordinate)
                 selected_control.show()
                 is_selected = true
                 Globals.current_selection.append(self)
@@ -74,7 +88,7 @@ func _allowed_to_add() -> bool:
     # if array has elements in it future elements must match
     if not Globals.current_selection.is_empty():
         var tile: GameTile = Globals.current_selection[Globals.current_selection.size() -1]
-        print("Distance allowed: %s" % _within_range())
+        # print("Distance allowed: %s" % _within_range())
         if (tile_type == tile.tile_type or 
             (
                 tile_type == Tile.TileType.Enemy 
@@ -96,7 +110,7 @@ func _within_range() -> bool:
     var last_tile_selected: GameTile = Globals.current_selection[-1]
     var x_dist = abs(last_tile_selected.coordinate.x - coordinate.x)
     var y_dist = abs(last_tile_selected.coordinate.y - coordinate.y)
-    print("Distance to coord: x: %s - y: %s" % [x_dist, y_dist])
+    # print("Distance to coord: x: %s - y: %s" % [x_dist, y_dist])
     return (x_dist <= 1 and y_dist <= 1)
 
 func _allowed_to_deselect():

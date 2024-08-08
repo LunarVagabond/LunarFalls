@@ -56,7 +56,7 @@ func _handle_enemy_turn():
 			dmg += 1
 	# FIXME: update to handle damage to armor / health algorithim 
 	Player.take_damage(dmg)
-	print("Damage Done: ", -dmg)
+	print("Damage Taken: ", -dmg)
 
 func _find_empty_tiles() -> Array[GameTile]:
 	var empty: Array[GameTile] = []
@@ -75,7 +75,6 @@ func _replace_tiles(selected_tiles: Array[GameTile], allow_empty: bool):
 
 func _handle_player_selection() -> void:
 	var tile_type: Tile.TileType = Globals.current_selection[0].tile_type
-	print(tile_type)
 	# TODO: Figure out the scaling and what not
 	match tile_type:
 		Tile.TileType.Health:
@@ -92,12 +91,21 @@ func _handle_player_selection() -> void:
 	
 
 func _replace_tiles_with_empty(selected_tiles: Array[GameTile]):
+	var player_damage = (Globals.current_selection.filter(_is_strength)).size() + Player.current_str
+	var should_replace = true
 	for tile: GameTile in selected_tiles:
-		var new_tile = tile_scene.instantiate().create(tile.index_on_board, true, Tile.TileType.Empty, -1, tile.coordinate)
-		game_board.remove_child(tile)
-		tile.queue_free()
-		game_board.add_child(new_tile)
-		game_board.move_child(new_tile, new_tile.index_on_board)
+		if tile.tile_type == Tile.TileType.Enemy:
+			should_replace = tile.take_damage(player_damage)
+		if should_replace:
+			var new_tile = tile_scene.instantiate().create(tile.index_on_board, true, Tile.TileType.Empty, -1, tile.coordinate)
+			game_board.remove_child(tile)
+			tile.queue_free()
+			game_board.add_child(new_tile)
+			game_board.move_child(new_tile, new_tile.index_on_board)
+		print(should_replace)
+
+func _is_strength(tile: GameTile) -> bool:
+	return tile.tile_type == Tile.TileType.Strength
 
 func _set_dashboard():
 	var image_data = Player.class_data.icon.get_image()
@@ -119,11 +127,6 @@ func _clear_board():
 		child.queue_free()
 
 # ------- Signals ----- #
-
-# func _on_button_pressed(button: BaseButton): # Normally "pressed" does not take in a button but Bind to callable allows for this (?)
-# 	# print("Tile Clicked: ", button.name)
-# 	var x = index_to_vector2(int(str(button.name))) # name is a "StringName" but we need a base string class to cast to int
-# 	print("Coordinate: (%s,%s)" % [x.x, x.y])
 
 func _on_quit_pressed():
 	Globals.game_state["game_board"] = game_board.get_children()
