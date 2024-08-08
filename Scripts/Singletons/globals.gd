@@ -29,6 +29,7 @@ func _load_tile_group():
     tile_resource_group.load_all_into(tiles_array)
     for t: Tile in tiles_array:
         tiles[Tile.TileType.keys()[t.tile_type]] = t
+        print(Tile.TileType.keys()[t.tile_type])
 
 func _handle_selection(tile: GameTile):
     print("Selected: %s" % tile)

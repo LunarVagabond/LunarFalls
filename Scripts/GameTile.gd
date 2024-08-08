@@ -30,10 +30,10 @@ func _ready():
         hp_label.hide()
         atk_label.hide()
 
-func create(idx:int, board_width: int, empty_allowed: bool, enforce_tile: int = -1, enforce_vector: Vector2 = Vector2.ZERO) -> GameTile:
+func create(idx:int, board_width: int, empty_allowed: bool, enforce_tile: Tile.TileType = -1, enforce_vector: Vector2 = Vector2.ZERO) -> GameTile:
     var tile_data: Tile
     if enforce_tile != -1:
-        tile_data = Globals.tiles.get(enforce_tile)
+        tile_data = Globals.tiles.get(Tile.TileType.keys()[enforce_tile])
     else:
         tile_data = _get_random_dict_key(empty_allowed)
     tile_type = tile_data.tile_type
@@ -57,9 +57,13 @@ func take_damage(amnt: int) -> bool:
         remove = true
     return remove
 
-func remove_tile():
-    pass
-
+func toggle_selected():
+    if is_selected:
+        selected_control.hide()
+        is_selected = false
+    else:
+        selected_control.show()
+        is_selected = true
 
 # Function to convert a 1D index to a 2D Vector2 coordinate
 func index_to_vector2(index: int, board_width: int) -> Vector2:
