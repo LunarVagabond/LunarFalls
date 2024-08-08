@@ -14,7 +14,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_vwqla")
-game_scene = "res://Scenes/GameBoard.tscn"
 main_menu_scene = "res://Scenes/main_menu.tscn"
 classes_resource_group = ExtResource("2_ai8dm")
 class_icon = NodePath("MarginContainer/VBoxContainer/ClassDisplay/ClassIcon")

@@ -1,7 +1,7 @@
 extends Control
 
 @export_category("Required Nodes")
-@export var game_scene: String
+# @export var game_scene: String
 @export var main_menu_scene: String
 @export var classes_resource_group: ResourceGroup
 @export var class_icon: TextureRect
@@ -17,6 +17,8 @@ Base Stats:
 	AP (Armor Points): %s
 	Strength: %s
 """
+
+var game_scene = preload("res://Scenes/GameBoard.tscn")
 
 
 # Called when the node enters the scene tree for the first time.
@@ -51,7 +53,7 @@ func _on_start_pressed():
 	print("Class Data: ", selected_class_data)
 	
 	# Change the scene to the game scene
-	get_tree().change_scene_to_file(game_scene)
+	get_tree().change_scene_to_packed(game_scene)
 
 
 func _on_class_list_item_clicked(_index:int, _at_position:Vector2, _mouse_button_index:int):

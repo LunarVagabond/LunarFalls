@@ -18,17 +18,11 @@ extends Control
 @export var game_title_label: Label
 @export var tile_scene: PackedScene
 
-@export_category("Mobile Nodes")
-@export var mobile_submit_button: Button
-
 var is_dragging: bool = false
 var start_tile = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-    var os = OS.get_name() # "Android", "BlackBerry 10", "Flash", "Haiku", "iOS", "HTML5", "OSX", "Server", "Windows", "WinRT", "X11"
-    if os in ["iOS", "Android", "BlackBerry 10"]:
-        mobile_submit_button.show()
     game_over_node.hide()
     SignalManager.connect("game_over", _handle_game_over)
     _clear_board()
