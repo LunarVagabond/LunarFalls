@@ -7,9 +7,21 @@ var current_hp: int
 var current_ap: int
 var current_str: int
 var current_gold: int
+var defense: int
 
 func take_damage(amnt: int):
-    current_hp -= amnt
+    var defense_multiplier = defense / 100.0
+    var armor_damage = amnt * defense_multiplier
+    var hp_damage = amnt - armor_damage
+
+    current_hp -= hp_damage
+    current_ap -= armor_damage
+
+    print("Armor absorbed:", armor_damage, "HP took:", hp_damage)
+
+    if current_ap < 0:
+        current_hp += current_ap
+        current_ap = 0
     if current_hp <= 0:
         SignalManager.emit_signal("game_over")
     SignalManager.emit_signal("update_health", -amnt)

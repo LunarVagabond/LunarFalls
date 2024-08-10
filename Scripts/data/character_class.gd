@@ -8,3 +8,4 @@ extends Resource
 @export var starting_ap: int
 @export var starting_str: int
 @export var starting_gold: int
+@export var starting_defense: int = 1
