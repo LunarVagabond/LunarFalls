@@ -12,8 +12,8 @@ var tile_type: Tile.TileType
 var coordinate = Vector2.ZERO
 
 # --- Enemy Specifics --- #
-var atk_power: int = randi_range(1,3)
-var hp: int = randi_range(1,3)
+var atk_power: int
+var hp: int
 
 func _ready():
     selected_control.hide()  # Hide the panel initially
@@ -22,6 +22,10 @@ func _ready():
     size_flags_vertical = Control.SIZE_EXPAND_FILL
     stretch_mode = TextureButton.STRETCH_SCALE
     if tile_type == Tile.TileType.Enemy:
+        # Scale enemy stats based on the current round
+        var game_round = Globals.current_round
+        hp = calculate_scaled_stat(game_round, 2, 1.2)
+        atk_power = calculate_scaled_stat(game_round, 2, 1.2)
         hp_label.text = str(hp)
         atk_label.text = str(atk_power)
         hp_label.show()
@@ -29,6 +33,16 @@ func _ready():
     else:
         hp_label.hide()
         atk_label.hide()
+
+func calculate_scaled_stat(game_round: int, base_value: int, scaling_factor: float) -> int:
+    # Calculate the base scaled stat (ceiling)
+    var base_stat = int(base_value * pow(scaling_factor, game_round / 5))
+    
+    # Generate a weighted random value within the range [1, base_stat]
+    var random_value = randi_range(1, base_stat) ** 2 / base_stat
+    
+    # Ensure the final value is within the ceiling
+    return max(base_stat, int(random_value))
 
 func create(idx:int, board_width: int, empty_allowed: bool, enforce_tile: Tile.TileType = -1, enforce_vector: Vector2 = Vector2.ZERO) -> GameTile:
     var tile_data: Tile
