@@ -13,3 +13,5 @@ starting_ap = 100
 starting_str = 1
 starting_gold = 15
 starting_defense = 30
+starting_will_power = 2
+starting_agility = 2

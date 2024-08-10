@@ -50,6 +50,8 @@ func _on_start_pressed():
 	Player.current_str = selected_class_data.starting_str
 	Player.current_gold = selected_class_data.starting_gold
 	Player.defense = selected_class_data.starting_defense
+	Player.will_power = selected_class_data.starting_will_power
+	Player.agility = selected_class_data.starting_agility
 	
 	print("Class Data: ", selected_class_data)
 	

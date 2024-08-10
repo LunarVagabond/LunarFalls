@@ -9,3 +9,9 @@ extends Resource
 @export var starting_str: int
 @export var starting_gold: int
 @export var starting_defense: int = 1
+
+## The amount health potions should be worth
+@export var starting_will_power: int = 1
+
+## The amount shields are worth
+@export var starting_agility: int = 1

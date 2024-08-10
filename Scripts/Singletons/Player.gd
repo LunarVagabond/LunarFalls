@@ -7,7 +7,9 @@ var current_hp: int
 var current_ap: int
 var current_str: int
 var current_gold: int
-var defense: int
+var defense: int # how much should shields absorb
+var will_power: int # The amount each potion should be worth
+var agility: int
 
 func take_damage(amnt: int):
     var defense_multiplier = defense / 100.0
