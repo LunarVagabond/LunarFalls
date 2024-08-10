@@ -11,6 +11,10 @@ var index_on_board = -1
 var tile_type: Tile.TileType
 var coordinate = Vector2.ZERO
 
+var base_color: String = "6e6e6ec1"
+var second_to_last_color: String = "7a7016c1"
+var leader_color: String = "a55528c1"
+
 # --- Enemy Specifics --- #
 var atk_power: int
 var hp: int
@@ -78,6 +82,23 @@ func toggle_selected():
     else:
         selected_control.show()
         is_selected = true
+    _set_selection_color()
+
+func _set_selection_color():
+    var selection_length: int = Globals.current_selection.size()
+    if selection_length == 0:
+        return
+    elif selection_length == 1:
+        selected_control.color = leader_color
+    elif selection_length == 2:
+        selected_control.color = leader_color
+        Globals.current_selection[-2].selected_control.color = second_to_last_color
+    else:
+        selected_control.color = leader_color
+        Globals.current_selection[-2].selected_control.color = second_to_last_color
+        Globals.current_selection[-3].selected_control.color = base_color
+
+    
 
 func toggle_off_selection():
     selected_control.hide()
