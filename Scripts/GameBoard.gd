@@ -129,9 +129,9 @@ func _handle_player_selection() -> void:
     # TODO: Figure out the scaling and what not
     match tile_type:
         Tile.TileType.Health:
-            SignalManager.emit_signal("update_health", len(Globals.current_selection) * Player.will_power)
+            SignalManager.emit_signal("update_health", len(Globals.current_selection) * randi_range(1, Player.will_power))
         Tile.TileType.Armor:
-            SignalManager.emit_signal("update_armor", len(Globals.current_selection) * Player.agility)
+            SignalManager.emit_signal("update_armor", len(Globals.current_selection) * randi_range(1, Player.agility))
         Tile.TileType.Enemy or Tile.TileType.Strength:
             print("Enemy Selected not doing a damnd thing baby!")
         Tile.TileType.GoldPts:

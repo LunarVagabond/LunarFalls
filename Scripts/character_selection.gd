@@ -16,6 +16,8 @@ Base Stats:
 	HP (Health Points): %s
 	AP (Armor Points): %s
 	Strength: %s
+	Agi: %s
+	Will: %s
 """
 
 var game_scene = preload("res://Scenes/GameBoard.tscn")
@@ -63,4 +65,11 @@ func _on_class_list_item_clicked(_index:int, _at_position:Vector2, _mouse_button
 	var selected = CharacterSelection.get_selected_items()[0]
 	var selected_class_data: CharacterClass = class_list[selected]
 	class_icon.texture = selected_class_data.icon
-	class_description.text = description_template % [selected_class_data.description, selected_class_data.starting_hp, selected_class_data.starting_ap, selected_class_data.starting_str]
+	class_description.text = description_template % [
+		selected_class_data.description, 
+		selected_class_data.starting_hp, 
+		selected_class_data.starting_ap, 
+		selected_class_data.starting_str,
+		selected_class_data.starting_agility,
+		selected_class_data.starting_will_power
+		]

@@ -39,10 +39,10 @@ func calculate_scaled_stat(game_round: int, base_value: int, scaling_factor: flo
     var base_stat = int(base_value * pow(scaling_factor, game_round / 5))
     
     # Generate a weighted random value within the range [1, base_stat]
-    var random_value = randi_range(1, base_stat) ** 2 / base_stat
-    
-    # Ensure the final value is within the ceiling
-    return max(base_stat, int(random_value))
+    var random_value = int(pow(randi_range(1, base_stat), 0.7))  # Adjust 0.5 to control skewness
+
+    # Ensure the final value is within the range [1, base_stat]
+    return clamp(random_value, 1, base_stat)
 
 func create(idx:int, board_width: int, empty_allowed: bool, enforce_tile: Tile.TileType = -1, enforce_vector: Vector2 = Vector2.ZERO) -> GameTile:
     var tile_data: Tile
