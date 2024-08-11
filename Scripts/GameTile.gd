@@ -51,7 +51,7 @@ func calculate_scaled_stat(game_round: int, base_value: int, scaling_factor: flo
 func create(idx:int, board_width: int, empty_allowed: bool, enforce_tile: Tile.TileType = -1, enforce_vector: Vector2 = Vector2.ZERO) -> GameTile:
     var tile_data: Tile
     if enforce_tile != -1:
-        tile_data = Globals.tiles.get(Tile.TileType.keys()[enforce_tile])
+        tile_data = Globals.tiles.get("Tiles").get(Tile.TileType.keys()[enforce_tile])
     else:
         tile_data = _get_random_dict_key(empty_allowed)
     tile_type = tile_data.tile_type
@@ -145,10 +145,13 @@ func _allowed_to_deselect():
 
 
 func _get_random_dict_key(empty_allowed: bool) -> Tile:
-    var keys = Globals.tiles.keys()
+    var group: String = "Tiles"
+    if randi_range(0,1) == 1:
+        group = "Enemies"
+    var keys = Globals.tiles[group].keys()
     var random_index = randi() % keys.size()
-    var tile: Tile = Globals.tiles[keys[random_index]]
+    var tile: Tile = Globals.tiles[group][keys[random_index]]
     while not empty_allowed and tile.tile_type == Tile.TileType.Empty:
         random_index = randi() % keys.size()
-        tile = Globals.tiles[keys[random_index]]
+        tile = Globals.tiles[group][keys[random_index]]
     return tile

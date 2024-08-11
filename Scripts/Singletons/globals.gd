@@ -7,7 +7,8 @@ var current_round = 1
 var current_selection: Array[GameTile] = []
 
 var tile_resource_group: ResourceGroup = preload("res://Scripts/data/all_tiles.tres")
-var tiles = {}
+var enemy_resource_group: ResourceGroup = preload("res://Scripts/data/all_enemies.tres")
+var tiles = {} # Contains pointers to resources for tiles
 
 # Default state, updated in save game and set when loading
 var game_state = {
@@ -21,14 +22,24 @@ var game_state = {
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-    _load_tile_group()
+    _load_tile_groups()
     print("Globals Loaded")
 
-func _load_tile_group():
+func _load_tile_groups():
     var tiles_array: Array[Tile] = []
+    var enemy_array: Array[EnemyTile] = []
     tile_resource_group.load_all_into(tiles_array)
-    for t: Tile in tiles_array:
-        tiles[Tile.TileType.keys()[t.tile_type]] = t
+    enemy_resource_group.load_all_into(enemy_array)
+    tiles["Tiles"] = {}
+    tiles["Enemies"] = {}
+
+    for tile: Tile in tiles_array:
+        tiles["Tiles"][Tile.TileType.keys()[tile.tile_type]] = tile
+    for enemey: EnemyTile in enemy_array:
+        tiles["Enemies"][EnemyTile.EnemyType.keys()[enemey.enemy_type]] = enemey
+    print("Tile Keys: %s" % tiles)
+    
+
 
 func _handle_selection(tile: GameTile):
     print("Selected: %s" % tile)

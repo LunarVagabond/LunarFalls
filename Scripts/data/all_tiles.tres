@@ -7,4 +7,4 @@ script = ExtResource("1_jhmsd")
 base_folder = "res://Scripts/data/tiles"
 includes = Array[String](["*.tres"])
 excludes = Array[String]([])
-paths = Array[String](["res://Scripts/data/tiles/coin.tres", "res://Scripts/data/tiles/empty.tres", "res://Scripts/data/tiles/enemy.tres", "res://Scripts/data/tiles/health_potion.tres", "res://Scripts/data/tiles/sheild.tres", "res://Scripts/data/tiles/sword.tres"])
+paths = Array[String](["res://Scripts/data/tiles/coin.tres", "res://Scripts/data/tiles/empty.tres", "res://Scripts/data/tiles/health_potion.tres", "res://Scripts/data/tiles/sheild.tres", "res://Scripts/data/tiles/sword.tres"])

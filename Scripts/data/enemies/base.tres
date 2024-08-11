@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="EnemyTile" load_steps=3 format=3 uid="uid://d1rmdt6pldnea"]
+
+[ext_resource type="Texture2D" uid="uid://c1y5813te0rmk" path="res://assets/RPGIconPack/icons/32x32/skull_01a.png" id="1_r4qem"]
+[ext_resource type="Script" path="res://Scripts/data/enemy.gd" id="1_tjnaf"]
+
+[resource]
+script = ExtResource("1_tjnaf")
+attack = 1
+health = 1
+enemy_type = 0
+icon = ExtResource("1_r4qem")
+positive_effect = false
+tile_type = 5
+base_effect = 0
