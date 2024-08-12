@@ -144,9 +144,23 @@ func _allowed_to_deselect():
     return (is_selected and self in Globals.current_selection and self == Globals.current_selection[Globals.current_selection.size() -1])
 
 
+# Calculate the enemy spawn probability based on the current round
+func _calculate_enemy_spawn_probability(game_round: int) -> float:
+    var base_probability = 0.05  # Start at 5%
+    var max_probability = 0.33  # Cap at 33%
+    var scaling_factor = 0.02  # Increase by 2% each interval
+    var interval = 5  # Increase probability every 5 rounds
+
+    # Calculate the probability, capped at max_probability
+    var probability = min(base_probability + (game_round / interval) * scaling_factor, max_probability)
+    
+    return probability
+
 func _get_random_dict_key(empty_allowed: bool) -> Tile:
     var group: String = "Tiles"
-    if randi_range(0,1) == 1:
+    var enemy_spawn_probability = _calculate_enemy_spawn_probability(Globals.current_round)
+    print("Spawn Probs: %s" % enemy_spawn_probability)
+    if randf() < enemy_spawn_probability:
         group = "Enemies"
     var keys = Globals.tiles[group].keys()
     var random_index = randi() % keys.size()

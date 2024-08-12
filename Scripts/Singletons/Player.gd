@@ -10,6 +10,10 @@ var current_gold: int
 var defense: int # how much should shields absorb
 var will_power: int # The amount each potion should be worth
 var agility: int
+var level: int = 0
+var xp: int = 0
+var xp_to_next_level = 100
+
 
 func take_damage(amnt: int):
     var defense_multiplier = defense / 100.0
@@ -28,3 +32,12 @@ func take_damage(amnt: int):
         SignalManager.emit_signal("game_over")
     SignalManager.emit_signal("update_health", -amnt)
     SignalManager.emit_signal("update_armor", -amnt)
+
+func gain_xp(xp_gained: int):
+    var new_xp: int = xp + xp_gained
+    while new_xp >= xp_to_next_level:
+        new_xp -= xp_to_next_level
+        SignalManager.emit_signal("level_up")
+        xp_to_next_level += 25  # Assuming you have a function to calculate the next level XP
+    
+    xp = new_xp

@@ -9,8 +9,11 @@ extends Control
 @export var main_menu_scene: String
 @export var str_label: Label
 @export var gold_label: Label
+@export var agi_label: Label
+@export var willpower_label: Label
 @export var health_bar: StatBar
 @export var ap_bar: StatBar
+@export var experience_proggress_bar: ProgressBar
 
 @export_category("Required Nodes")
 @export var game_over_node: Control
@@ -159,6 +162,10 @@ func _set_dashboard():
     var image_texture = ImageTexture.create_from_image(image_data)
     str_label.text = "Base ATK: %s" % Player.class_data.starting_str
     gold_label.text = "GOLD: %s" % Player.class_data.starting_gold 
+    agi_label.text = "BASE AGI: %s" % Player.class_data.starting_agility
+    willpower_label.text = "BASE Will: %s" % Player.class_data.starting_will_power
+    experience_proggress_bar.value = 0
+    experience_proggress_bar.max_value = Player.xp_to_next_level
     health_bar.initilize_instance(Player.class_data.starting_hp)
     ap_bar.initilize_instance(Player.class_data.starting_ap)
     class_image.texture = image_texture
