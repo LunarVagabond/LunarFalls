@@ -19,7 +19,7 @@ bg_color = Color(1, 0.298039, 0.423529, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a1exc"]
 bg_color = Color(0.12549, 0.415686, 0.611765, 1)
 
-[node name="GameBoard" type="Control" node_paths=PackedStringArray("class_image", "str_label", "gold_label", "agi_label", "willpower_label", "health_bar", "ap_bar", "experience_proggress_bar", "game_over_node", "game_board", "game_title_label")]
+[node name="GameBoard" type="Control" node_paths=PackedStringArray("class_image", "str_label", "gold_label", "agi_label", "willpower_label", "health_bar", "ap_bar", "experience_proggress_bar", "game_over_node", "game_board", "game_title_label", "player_level_title", "audio_player")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -38,8 +38,10 @@ ap_bar = NodePath("MarginContainer/ViewContainer/BottomDashboard/VBoxContainer2/
 experience_proggress_bar = NodePath("MarginContainer/ViewContainer/Exp")
 game_over_node = NodePath("GameOver")
 game_board = NodePath("MarginContainer/ViewContainer/GameBoard/TileContainer")
-game_title_label = NodePath("MarginContainer/ViewContainer/TitleLabel")
+game_title_label = NodePath("MarginContainer/ViewContainer/HBoxContainer/TitleLabel")
+player_level_title = NodePath("MarginContainer/ViewContainer/HBoxContainer/PlayerLevelLabel")
 tile_scene = ExtResource("3_3er8d")
+audio_player = NodePath("AudioStreamPlayer")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("9_7x5q6")
@@ -71,12 +73,30 @@ theme_override_constants/margin_bottom = 25
 layout_mode = 2
 theme_override_constants/separation = 15
 
-[node name="TitleLabel" type="Label" parent="MarginContainer/ViewContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/ViewContainer"]
 layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/ViewContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
 theme_override_fonts/font = ExtResource("4_sqvpv")
 theme_override_font_sizes/font_size = 30
 text = "Good Luck Adventurer"
-horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control" type="Control" parent="MarginContainer/ViewContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PlayerLevelLabel" type="Label" parent="MarginContainer/ViewContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_fonts/font = ExtResource("4_sqvpv")
+theme_override_font_sizes/font_size = 30
+text = "Player
+ Level"
+horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="GameBoard" type="Panel" parent="MarginContainer/ViewContainer"]
 layout_mode = 2
@@ -178,9 +198,9 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 15
 
-[node name="Temp" type="Label" parent="MarginContainer/ViewContainer/BottomDashboard/VBoxContainer3"]
+[node name="MenuLabel" type="Label" parent="MarginContainer/ViewContainer/BottomDashboard/VBoxContainer3"]
 layout_mode = 2
-text = "Buttons"
+text = "Menu Options"
 horizontal_alignment = 1
 
 [node name="Button" type="Button" parent="MarginContainer/ViewContainer/BottomDashboard/VBoxContainer3"]
@@ -188,6 +208,10 @@ layout_mode = 2
 theme = ExtResource("8_kun4r")
 theme_override_fonts/font = ExtResource("4_sqvpv")
 text = "Save & Quit"
+
+[node name="CheckButton" type="CheckButton" parent="MarginContainer/ViewContainer/BottomDashboard/VBoxContainer3"]
+layout_mode = 2
+text = "Mute Sound"
 
 [node name="Exp" type="ProgressBar" parent="MarginContainer/ViewContainer"]
 layout_mode = 2
@@ -200,3 +224,4 @@ visible = false
 layout_mode = 1
 
 [connection signal="pressed" from="MarginContainer/ViewContainer/BottomDashboard/VBoxContainer3/Button" to="." method="_on_quit_pressed"]
+[connection signal="toggled" from="MarginContainer/ViewContainer/BottomDashboard/VBoxContainer3/CheckButton" to="." method="_handle_sfx_toggled"]

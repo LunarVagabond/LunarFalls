@@ -159,7 +159,6 @@ func _calculate_enemy_spawn_probability(game_round: int) -> float:
 func _get_random_dict_key(empty_allowed: bool) -> Tile:
     var group: String = "Tiles"
     var enemy_spawn_probability = _calculate_enemy_spawn_probability(Globals.current_round)
-    print("Spawn Probs: %s" % enemy_spawn_probability)
     if randf() < enemy_spawn_probability:
         group = "Enemies"
     var keys = Globals.tiles[group].keys()

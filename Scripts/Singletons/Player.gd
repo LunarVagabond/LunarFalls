@@ -15,6 +15,9 @@ var xp: int = 0
 var xp_to_next_level = 100
 
 
+# func _ready():
+    # SignalManager.connect("level_up", handle_levelup)
+
 func take_damage(amnt: int):
     var defense_multiplier = defense / 100.0
     var armor_damage = amnt * defense_multiplier
@@ -38,6 +41,10 @@ func gain_xp(xp_gained: int):
     while new_xp >= xp_to_next_level:
         new_xp -= xp_to_next_level
         SignalManager.emit_signal("level_up")
-        xp_to_next_level += 25  # Assuming you have a function to calculate the next level XP
-    
+        xp_to_next_level += 25  
     xp = new_xp
+
+func handle_levelup():
+    level += 1
+    print("level up")
+    pass

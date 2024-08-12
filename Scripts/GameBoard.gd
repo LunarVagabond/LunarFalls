@@ -19,7 +19,9 @@ extends Control
 @export var game_over_node: Control
 @export var game_board: GridContainer
 @export var game_title_label: Label
+@export var player_level_title: Label
 @export var tile_scene: PackedScene
+@export var audio_player: AudioStreamPlayer
 
 var is_dragging: bool = false
 var start_tile = null
@@ -28,6 +30,8 @@ var start_tile = null
 func _ready():
     game_over_node.hide()
     SignalManager.connect("game_over", _handle_game_over)
+    SignalManager.connect("level_up", _handle_levelup)
+    player_level_title.text = ""
     _clear_board()
     _set_dashboard()
     _populate_game_board()
@@ -94,6 +98,7 @@ func _handle_drag_end():
         Globals.is_palyers_turn = true
         Globals.current_selection.clear() # Reset the array
         game_title_label.text = "Round %s" % Globals.current_round
+        player_level_title.text = "Player Level %s" % Player.level
     # Invalid move player go again
     else:
         print("Invalid selection with", len(Globals.current_selection), "tiles")
@@ -133,15 +138,27 @@ func _handle_player_selection() -> void:
     match tile_type:
         Tile.TileType.Health:
             SignalManager.emit_signal("update_health", len(Globals.current_selection) * randi_range(1, Player.will_power))
+            Player.gain_xp(Globals.current_selection.size())
         Tile.TileType.Armor:
             SignalManager.emit_signal("update_armor", len(Globals.current_selection) * randi_range(1, Player.agility))
+            Player.gain_xp(Globals.current_selection.size())
         Tile.TileType.Enemy or Tile.TileType.Strength:
             print("Enemy Selected not doing a damnd thing baby!")
+            var xp_gained = 0
+            for node: GameTile in Globals.current_selection:
+                match node.tile_type:
+                    Tile.TileType.Enemy:
+                        xp_gained += node.atk_power + node.hp
+                    _:
+                        xp_gained += 1
+            Player.gain_xp(xp_gained)
         Tile.TileType.GoldPts:
             Player.current_gold += len(Globals.current_selection)
+            Player.gain_xp(Globals.current_selection.size())
             gold_label.text = "Gold: %s" % Player.current_gold
         _: 
             print("You should not be here!")
+    experience_proggress_bar.value = Player.xp
     
 
 func _replace_tiles_with_empty(selected_tiles: Array[GameTile]):
@@ -191,3 +208,13 @@ func _handle_game_over():
     print("Game Over")
     game_over_node.show()
 
+func _handle_levelup():
+    Player.handle_levelup()
+    experience_proggress_bar.value = Player.xp
+    experience_proggress_bar.max_value = Player.xp_to_next_level
+
+func _handle_sfx_toggled(on: bool):
+    if on:
+        audio_player.stop()
+    else:
+        audio_player.play()
