@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bph06jpcxmkmm"]
+[gd_scene load_steps=14 format=3 uid="uid://bph06jpcxmkmm"]
 
 [ext_resource type="Script" path="res://Scripts/GameBoard.gd" id="1_rf1fe"]
 [ext_resource type="PackedScene" uid="uid://b21wu3bwm806o" path="res://Scenes/Tile.tscn" id="3_3er8d"]
@@ -18,6 +18,9 @@ bg_color = Color(1, 0.298039, 0.423529, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a1exc"]
 bg_color = Color(0.12549, 0.415686, 0.611765, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l1cbx"]
+bg_color = Color(0.85098, 0.686275, 0.101961, 1)
 
 [node name="GameBoard" type="Control" node_paths=PackedStringArray("class_image", "str_label", "gold_label", "agi_label", "willpower_label", "health_bar", "ap_bar", "experience_proggress_bar", "game_over_node", "game_board", "game_title_label", "player_level_title", "audio_player")]
 layout_mode = 3
@@ -215,6 +218,11 @@ text = "Mute Sound"
 
 [node name="Exp" type="ProgressBar" parent="MarginContainer/ViewContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.231373, 0.654902, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 25
+theme_override_styles/fill = SubResource("StyleBoxFlat_l1cbx")
 step = 1.0
 value = 50.0
 rounded = true

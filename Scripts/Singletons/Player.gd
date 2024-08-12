@@ -10,7 +10,7 @@ var current_gold: int
 var defense: int # how much should shields absorb
 var will_power: int # The amount each potion should be worth
 var agility: int
-var level: int = 0
+var level: int = 1
 var xp: int = 0
 var xp_to_next_level = 100
 
