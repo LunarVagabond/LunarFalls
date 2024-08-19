@@ -7,5 +7,6 @@ signal update_armor(change_amount: int)
 
 signal level_up()
 signal gain_experience(exp_gained: int) # I think eventually we do this so each component can self handle an xp gain
+signal round_up(round: int)
 
 signal game_over()

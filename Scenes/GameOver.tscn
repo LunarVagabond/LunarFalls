@@ -1,9 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://bdyi0o78evs6d"]
+[gd_scene load_steps=4 format=3 uid="uid://bdyi0o78evs6d"]
 
 [ext_resource type="Script" path="res://Scripts/GameOver.gd" id="1_32fad"]
-[ext_resource type="Texture2D" uid="uid://c7ivs18amv8y" path="res://assets/GameOver.png" id="1_lmo05"]
+[ext_resource type="Texture2D" uid="uid://bynmjgexl145u" path="res://assets/GameOver.png" id="1_lmo05"]
+[ext_resource type="FontFile" uid="uid://cqdi3osc1w6nv" path="res://assets/Fonts/Clarity.ttf" id="3_3uxis"]
 
-[node name="GameOver" type="Control"]
+[node name="GameOver" type="Control" node_paths=PackedStringArray("round_label")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,6 +14,7 @@ grow_vertical = 2
 script = ExtResource("1_32fad")
 character_selection_scene = "res://Scenes/character_selection.tscn"
 main_menu_scene = "res://Scenes/main_menu.tscn"
+round_label = NodePath("MarginContainer/VBoxContainer/FinalRound")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 1
@@ -55,6 +57,15 @@ theme_override_constants/margin_bottom = 25
 layout_mode = 2
 theme_override_constants/separation = 25
 alignment = 1
+
+[node name="FinalRound" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_3uxis")
+theme_override_font_sizes/font_size = 30
+text = "Final Round: 
+0"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="NewGame" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
