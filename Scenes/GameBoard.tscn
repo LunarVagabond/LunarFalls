@@ -2,13 +2,13 @@
 
 [ext_resource type="Script" path="res://Scripts/GameBoard.gd" id="1_rf1fe"]
 [ext_resource type="PackedScene" uid="uid://b21wu3bwm806o" path="res://Scenes/Tile.tscn" id="3_3er8d"]
-[ext_resource type="Texture2D" uid="uid://c7ivs18amv8y" path="res://assets/GameOver.png" id="4_o5quv"]
+[ext_resource type="Texture2D" uid="uid://bynmjgexl145u" path="res://assets/GameOver.png" id="4_o5quv"]
 [ext_resource type="PackedScene" uid="uid://eober06mhhdr" path="res://Scenes/StatBar.tscn" id="4_qr7ni"]
-[ext_resource type="FontFile" uid="uid://dpwpa8ww5g66r" path="res://assets/Fonts/Clarity.ttf" id="4_sqvpv"]
+[ext_resource type="FontFile" uid="uid://cqdi3osc1w6nv" path="res://assets/Fonts/Clarity.ttf" id="4_sqvpv"]
 [ext_resource type="PackedScene" uid="uid://bdyi0o78evs6d" path="res://Scenes/GameOver.tscn" id="5_b87jj"]
-[ext_resource type="Texture2D" uid="uid://cl2orrg6bncrn" path="res://assets/GUIEssentials/UI_Flat_Select_02a2.png" id="5_s32u3"]
+[ext_resource type="Texture2D" uid="uid://cwusvb7jkhg6p" path="res://assets/GUIEssentials/UI_Flat_Select_02a2.png" id="5_s32u3"]
 [ext_resource type="Theme" uid="uid://6ejucie1j8lf" path="res://assets/DefaultButtonTheme.tres" id="8_kun4r"]
-[ext_resource type="AudioStream" uid="uid://dk1ikswpiany8" path="res://assets/Audio/SpaceBG.mp3" id="9_7x5q6"]
+[ext_resource type="AudioStream" uid="uid://blrvgxmvt4g30" path="res://assets/Audio/SpaceBG.mp3" id="9_7x5q6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vvey6"]
 bg_color = Color(0.65098, 0, 0.211765, 1)
